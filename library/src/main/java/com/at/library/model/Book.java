@@ -37,6 +37,8 @@ public class Book implements Serializable {
 	private Date startDate;
 	
 	private Booking booking;
+	
+	private Room room;
 
 	public Integer getId() {
 		return id;
@@ -93,6 +95,15 @@ public class Book implements Serializable {
 
 	public void setBooking(Booking booking) {
 		this.booking = booking;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 }

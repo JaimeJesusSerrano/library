@@ -33,6 +33,7 @@ public class Booking implements Serializable {
 		return client;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "booking")
 	public void setClient(Client client) {
 		this.client = client;
 	}

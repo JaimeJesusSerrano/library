@@ -17,6 +17,8 @@ public class User implements Serializable {
 	
 	private String name;
 	
+	private String surname;
+	
 	private String nif;
 
 	public String getName() {
@@ -27,6 +29,14 @@ public class User implements Serializable {
 		this.name = name;
 	}
 	
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	
 	public String getNif() {
 		return nif;
 	}
@@ -34,4 +44,5 @@ public class User implements Serializable {
 	public void setNif(String nif) {
 		this.nif = nif;
 	}
+
 }

@@ -3,8 +3,10 @@ package com.at.library.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Room implements Serializable {
@@ -18,6 +20,8 @@ public class Room implements Serializable {
 	private String name;
 	
 	private String buildingName;
+	
+	private Bookshelf bookshelf;
 
 	public Integer getId() {
 		return id;
@@ -41,6 +45,15 @@ public class Room implements Serializable {
 
 	public void setBuildingName(String buildingName) {
 		this.buildingName = buildingName;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	public Bookshelf getBookshelf() {
+		return bookshelf;
+	}
+
+	public void setBookshelf(Bookshelf bookshelf) {
+		this.bookshelf = bookshelf;
 	}
 	
 }

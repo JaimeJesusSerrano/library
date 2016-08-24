@@ -2,6 +2,7 @@ package com.at.library.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -37,7 +38,7 @@ public class Book implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 	
-	private Rent rent;
+	private Set<Rent> rents;
 	
 	private Bookshelf bookshelf;
 
@@ -88,16 +89,6 @@ public class Book implements Serializable {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	
-//	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
-	@ManyToMany(fetch = FetchType.LAZY, targetEntity=Rent.class)
-	public Rent getRent() {
-		return rent;
-	}
-
-	public void setRent(Rent rent) {
-		this.rent = rent;
-	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	public Bookshelf getBookshelf() {
@@ -106,6 +97,15 @@ public class Book implements Serializable {
 
 	public void setBookshelf(Bookshelf bookshelf) {
 		this.bookshelf = bookshelf;
+	}
+	
+	@ManyToMany(fetch = FetchType.LAZY, targetEntity = Rent.class)
+	public Set<Rent> getRents() {
+		return rents;
+	}
+
+	public void setRents(Set<Rent> rents) {
+		this.rents = rents;
 	}
 
 }

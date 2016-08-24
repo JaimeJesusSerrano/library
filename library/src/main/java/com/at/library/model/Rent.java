@@ -39,7 +39,7 @@ public class Rent implements Serializable {
 		this.client = client;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, targetEntity=Book.class, mappedBy="books")
+	@ManyToMany(fetch = FetchType.LAZY, targetEntity = Book.class, mappedBy = "rents")
 	public Set<Book> getBooks() {
 		return books;
 	}

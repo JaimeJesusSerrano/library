@@ -33,25 +33,29 @@ public class BookController {
 //	Crear
 	@RequestMapping(method = { RequestMethod.POST })
 	public BookDTO create(@RequestBody BookDTO bookDTO) {
-		log.debug(String.format("Vamos a crear el libro siguiente", bookDTO));
+		log.debug(String.format("Vamos a crear el libro siguiente %s", bookDTO));
 		return bookservice.create(bookDTO);
 	}
 	
 //	Recuperar
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
-	public BookDTO read(@PathVariable("id") Integer id) {
-		log.debug(String.format("Vamos a recuperar el libro con el siguiente id", id));
+	public BookDTO findOne(@PathVariable("id") Integer id) {
+		log.debug(String.format("Vamos a recuperar el libro con el siguiente id %s", id));
 		return bookservice.findOne(id);
 	}
 	
 //	Modificar
-	@RequestMapping(method = { RequestMethod.PUT })
-	public void update(@RequestBody BookDTO bookDTO) {
-		log.debug(String.format("Vamos a recuperar el libro con el siguiente id", id));
-		return bookservice.get(id);
+	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
+	public void update(@PathVariable("id") Integer id, @RequestBody BookDTO bookDTO) {
+		log.debug(String.format("Vamos a actualizar el libro con el siguiente id %s", id));
+		bookservice.update(bookDTO);;
 	}
 	
 //	Borrar
-	
+	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
+	public void delete(@PathVariable("id") Integer id) {
+		log.debug(String.format("Vamos a actualizar el libro con el siguiente id %s", id));
+		bookservice.delete(id);;
+	}
 
 }

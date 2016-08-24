@@ -3,10 +3,10 @@ package com.at.library.dao;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.at.library.model.Booking;
+import com.at.library.model.Rent;
 
 @Repository
-public interface BookingDao extends CrudRepository<Booking, Integer> {
+public interface RentDao extends CrudRepository<Rent, Integer> {
 
 }
 

@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Booking implements Serializable {
+public class Rent implements Serializable {
 
 	private static final long serialVersionUID = 1560692319680192039L;
 
@@ -28,12 +28,12 @@ public class Booking implements Serializable {
 		return reservationNumber;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "booking")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rent")
 	public Client getClient() {
 		return client;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "booking")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rent")
 	public void setClient(Client client) {
 		this.client = client;
 	}

@@ -36,7 +36,7 @@ public class Book implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 	
-	private Booking booking;
+	private Rent rent;
 	
 	private Room room;
 
@@ -89,12 +89,12 @@ public class Book implements Serializable {
 	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	public Booking getBooking() {
-		return booking;
+	public Rent getRent() {
+		return rent;
 	}
 
-	public void setBooking(Booking booking) {
-		this.booking = booking;
+	public void setRent(Rent rent) {
+		this.rent = rent;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)

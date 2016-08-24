@@ -1,11 +1,13 @@
 package com.at.library.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -22,7 +24,7 @@ public class Rent implements Serializable {
 	
 	private Client client;
 	
-	private Book book;
+	private Set<Book> books;
 
 	public String getReservationNumber() {
 		return reservationNumber;
@@ -33,17 +35,17 @@ public class Rent implements Serializable {
 		return client;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rent")
 	public void setClient(Client client) {
 		this.client = client;
 	}
 
-	public Book getBook() {
-		return book;
+	@ManyToMany(fetch = FetchType.LAZY, targetEntity=Book.class, mappedBy="books")
+	public Set<Book> getBooks() {
+		return books;
 	}
 
-	public void setBook(Book book) {
-		this.book = book;
+	public void setBooks(Set<Book> books) {
+		this.books = books;
 	}
 	
 }

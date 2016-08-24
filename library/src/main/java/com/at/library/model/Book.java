@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -89,7 +90,7 @@ public class Book implements Serializable {
 	}
 	
 //	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "categories")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, targetEntity=Rent.class)
 	public Rent getRent() {
 		return rent;
 	}

@@ -9,15 +9,15 @@ public class Client extends User {
 
 	private static final long serialVersionUID = -24600065830793754L;
 	
-	private Rent booking;
+	private Rent rent;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	public Rent getBooking() {
-		return booking;
+	public Rent getRent() {
+		return rent;
 	}
 
-	public void setBooking(Rent booking) {
-		this.booking = booking;
+	public void setRent(Rent rent) {
+		this.rent = rent;
 	}
 
 }

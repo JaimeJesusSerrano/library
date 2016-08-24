@@ -38,7 +38,7 @@ public class Book implements Serializable {
 	
 	private Rent rent;
 	
-	private Building building;
+	private Bookshelf bookshelf;
 
 	public Integer getId() {
 		return id;
@@ -99,12 +99,12 @@ public class Book implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	public Building getBuilding() {
-		return building;
+	public Bookshelf getBookshelf() {
+		return bookshelf;
 	}
 
-	public void setBuilding(Building building) {
-		this.building = building;
+	public void setBookshelf(Bookshelf bookshelf) {
+		this.bookshelf = bookshelf;
 	}
 
 }

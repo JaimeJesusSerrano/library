@@ -12,7 +12,7 @@ public interface BookService {
 	 * 
 	 * @return listado de libros
 	 */
-	List<BookDTO> findAll();
+	public List<BookDTO> findAll();
 
 	/**
 	 * Transfrma un libro en un libroDTO
@@ -20,7 +20,7 @@ public interface BookService {
 	 * @param book
 	 * @return
 	 */
-	BookDTO transform(Book book);
+	public BookDTO transform(Book book);
 
 	/**
 	 * Transforma un libroDTO en un libro
@@ -28,6 +28,14 @@ public interface BookService {
 	 * @param book
 	 * @return
 	 */
-	Book transform(BookDTO book);
+	public Book transform(BookDTO book);
+	
+	public BookDTO findById(Integer id);
+	
+	public BookDTO create(BookDTO bookDTO);
+	
+	public void update(BookDTO bookDTO);
+	
+	public void delete(Integer id);
 
 }

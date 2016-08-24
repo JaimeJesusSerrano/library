@@ -48,7 +48,7 @@ public class BookController {
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
 	public void update(@PathVariable("id") Integer id, @RequestBody BookDTO bookDTO) {
 		log.debug(String.format("Vamos a actualizar el libro con el siguiente id %s", id));
-		bookservice.update(bookDTO);;
+		bookservice.update(bookDTO);
 	}
 	
 //	Borrar

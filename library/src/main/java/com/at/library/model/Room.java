@@ -19,9 +19,7 @@ public class Room implements Serializable {
 	
 	private String name;
 	
-	private String buildingName;
-	
-	private Bookshelf bookshelf;
+	private Building building;
 
 	public Integer getId() {
 		return id;
@@ -39,21 +37,13 @@ public class Room implements Serializable {
 		this.name = name;
 	}
 
-	public String getBuildingName() {
-		return buildingName;
-	}
-
-	public void setBuildingName(String buildingName) {
-		this.buildingName = buildingName;
-	}
-
 	@ManyToOne(fetch = FetchType.LAZY)
-	public Bookshelf getBookshelf() {
-		return bookshelf;
+	public Building getBuilding() {
+		return building;
 	}
 
-	public void setBookshelf(Bookshelf bookshelf) {
-		this.bookshelf = bookshelf;
+	public void setBuilding(Building building) {
+		this.building = building;
 	}
 	
 }

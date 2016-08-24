@@ -2,6 +2,7 @@ package com.at.library.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -38,7 +39,7 @@ public class Book implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 	
-	private Set<Rent> rents;
+	private Set<Rent> rents = new HashSet<Rent>();
 	
 	private Bookshelf bookshelf;
 
@@ -99,7 +100,8 @@ public class Book implements Serializable {
 		this.bookshelf = bookshelf;
 	}
 	
-	@ManyToMany(fetch = FetchType.LAZY, targetEntity = Rent.class)
+//	@ManyToMany(fetch = FetchType.LAZY, mappedBy="books")
+	@ManyToMany(targetEntity = Rent.class)
 	public Set<Rent> getRents() {
 		return rents;
 	}

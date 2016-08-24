@@ -1,6 +1,7 @@
 package com.at.library.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class Rent implements Serializable {
 	
 	private Client client;
 	
-	private Set<Book> books;
+	private Set<Book> books = new HashSet<Book>();
 
 	public String getReservationNumber() {
 		return reservationNumber;
@@ -39,7 +40,7 @@ public class Rent implements Serializable {
 		this.client = client;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, targetEntity = Book.class, mappedBy = "rents")
+	@ManyToMany(targetEntity = Book.class, mappedBy="rents")
 	public Set<Book> getBooks() {
 		return books;
 	}

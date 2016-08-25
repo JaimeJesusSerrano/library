@@ -7,6 +7,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -22,7 +23,7 @@ public class Rent implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Employee employee;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne
 	private Client client;
 	
 	@Temporal(TemporalType.TIMESTAMP)

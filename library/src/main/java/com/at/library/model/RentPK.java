@@ -9,7 +9,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Embeddable
-public class RentId implements Serializable {
+public class RentPK implements Serializable {
 	
 	private static final long serialVersionUID = -7738526754452207141L;
 	

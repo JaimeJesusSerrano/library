@@ -17,7 +17,7 @@ public class Rent implements Serializable {
 	private static final long serialVersionUID = 1560692319680192039L;
 	
 	@EmbeddedId
-	private RentId rentId;
+	private RentPK rentPK;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Employee employee;
@@ -30,22 +30,22 @@ public class Rent implements Serializable {
 	
 	@Transient
 	public Date getInitDate() {
-		return rentId.getInitDate();
+		return rentPK.getInitDate();
 	}
 
 	@Transient
 	public void setInitDate(Date initDate) {
-		rentId.setInitDate(initDate);
+		rentPK.setInitDate(initDate);
 	}
 
 	@Transient
 	public Book getBook() {
-		return rentId.getBook();
+		return rentPK.getBook();
 	}
 
 	@Transient
 	public void setBook(Book book) {
-		rentId.setBook(book);
+		rentPK.setBook(book);
 	}
 
 	public Employee getEmployee() {

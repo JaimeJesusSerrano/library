@@ -2,8 +2,7 @@ package com.at.library.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,8 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -38,8 +37,8 @@ public class Book implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
-	
-	private Set<Rent> rents = new HashSet<Rent>();
+
+	private List<Rent> rents;
 	
 	private Bookshelf bookshelf;
 
@@ -99,14 +98,13 @@ public class Book implements Serializable {
 	public void setBookshelf(Bookshelf bookshelf) {
 		this.bookshelf = bookshelf;
 	}
-	
-//	@ManyToMany(fetch = FetchType.LAZY, mappedBy="books")
-	@ManyToMany(targetEntity = Rent.class)
-	public Set<Rent> getRents() {
+
+	@OneToMany(mappedBy = "books")
+	public List<Rent> getRents() {
 		return rents;
 	}
 
-	public void setRents(Set<Rent> rents) {
+	public void setRents(List<Rent> rents) {
 		this.rents = rents;
 	}
 

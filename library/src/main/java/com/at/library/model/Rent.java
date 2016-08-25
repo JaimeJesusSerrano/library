@@ -1,14 +1,12 @@
 package com.at.library.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -25,7 +23,7 @@ public class Rent implements Serializable {
 	
 	private Client client;
 	
-	private Set<Book> books = new HashSet<Book>();
+	private Book book;
 
 	public String getReservationNumber() {
 		return reservationNumber;
@@ -40,13 +38,13 @@ public class Rent implements Serializable {
 		this.client = client;
 	}
 
-	@ManyToMany(targetEntity = Book.class, mappedBy="rents")
-	public Set<Book> getBooks() {
-		return books;
+	@ManyToOne(fetch = FetchType.LAZY)
+	public Book getBook() {
+		return book;
 	}
 
-	public void setBooks(Set<Book> books) {
-		this.books = books;
+	public void setBook(Book book) {
+		this.book = book;
 	}
 	
 }

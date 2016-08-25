@@ -38,7 +38,7 @@ public class Rent implements Serializable {
 		this.client = client;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+//	@ManyToOne(fetch = FetchType.LAZY)
 	public Book getBook() {
 		return book;
 	}

@@ -1,5 +1,7 @@
 package com.at.library.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -8,16 +10,17 @@ import javax.persistence.ManyToOne;
 public class Client extends User {
 
 	private static final long serialVersionUID = -24600065830793754L;
-	
-	private Rent rent;
+
+	private List<Rent> rents;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	public Rent getRent() {
-		return rent;
+
+	public List<Rent> getRents() {
+		return rents;
 	}
 
-	public void setRent(Rent rent) {
-		this.rent = rent;
+	public void setRents(List<Rent> rents) {
+		this.rents = rents;
 	}
 
 }

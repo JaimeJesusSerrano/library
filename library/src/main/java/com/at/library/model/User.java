@@ -22,7 +22,15 @@ public class User implements Serializable {
 	
 	private String surname;
 	
-	private String nif;
+	private String dni;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -39,13 +47,13 @@ public class User implements Serializable {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
-	public String getNif() {
-		return nif;
+
+	public String getDni() {
+		return dni;
 	}
 
-	public void setNif(String nif) {
-		this.nif = nif;
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
 }

@@ -3,26 +3,21 @@ package com.at.library.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 public class Rent implements Serializable {
 
 	private static final long serialVersionUID = 1560692319680192039L;
-
-	@Id
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date initDate;
 	
-	@Id
-	@OneToOne
-	private Book book;
+	@EmbeddedId
+	private RentId rentId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Employee employee;
@@ -32,22 +27,25 @@ public class Rent implements Serializable {
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
-
-
+	
+	@Transient
 	public Date getInitDate() {
-		return initDate;
+		return rentId.getInitDate();
 	}
 
+	@Transient
 	public void setInitDate(Date initDate) {
-		this.initDate = initDate;
+		rentId.setInitDate(initDate);
 	}
 
+	@Transient
 	public Book getBook() {
-		return book;
+		return rentId.getBook();
 	}
 
+	@Transient
 	public void setBook(Book book) {
-		this.book = book;
+		rentId.setBook(book);
 	}
 
 	public Employee getEmployee() {

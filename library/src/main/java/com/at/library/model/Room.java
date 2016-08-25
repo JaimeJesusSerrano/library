@@ -1,12 +1,14 @@
 package com.at.library.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Room implements Serializable {
@@ -14,36 +16,36 @@ public class Room implements Serializable {
 	private static final long serialVersionUID = -7112342700691944339L;
 
 	@Id
-	@GeneratedValue
-	private Integer id;
+	private String code;
 	
-	private String name;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "room")
+	private List<Bookshelf> bookshelfs = new ArrayList<>();
 	
+	@OneToOne
 	private Building building;
 
-	public Integer getId() {
-		return id;
+	public String getCode() {
+		return code;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	public Building getBuilding() {
 		return building;
 	}
 
 	public void setBuilding(Building building) {
 		this.building = building;
+	}
+
+	public List<Bookshelf> getBookshelfs() {
+		return bookshelfs;
+	}
+
+	public void setBookshelfs(List<Bookshelf> bookshelfs) {
+		this.bookshelfs = bookshelfs;
 	}
 	
 }

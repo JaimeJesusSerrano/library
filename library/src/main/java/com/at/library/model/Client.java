@@ -5,8 +5,10 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
+@PrimaryKeyJoinColumn(referencedColumnName = "id")
 public class Client extends User {
 
 	private static final long serialVersionUID = -24600065830793754L;
@@ -14,7 +16,6 @@ public class Client extends User {
 	private List<Rent> rents;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-
 	public List<Rent> getRents() {
 		return rents;
 	}

@@ -1,43 +1,37 @@
 package com.at.library.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Bookshelf implements Serializable {
 
 	private static final long serialVersionUID = -7067308147736914174L;
-
+	
 	@Id
-	@GeneratedValue
-	private Integer id;
+	private String code;
 	
-	private String name;
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<Book> books = new ArrayList<>();
 	
+	@OneToOne
 	private Room room;
 
-	public Integer getId() {
-		return id;
+	public String getCode() {
+		return code;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	public Room getRoom() {
 		return room;
 	}
@@ -46,4 +40,12 @@ public class Bookshelf implements Serializable {
 		this.room = room;
 	}
 
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
+	
 }

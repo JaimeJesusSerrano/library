@@ -18,7 +18,7 @@ public class Bookshelf implements Serializable {
 	@Id
 	private String code;
 	
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "bookshelf")
 	private List<Book> books = new ArrayList<>();
 	
 	@OneToOne

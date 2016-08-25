@@ -37,8 +37,8 @@ public class Book implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
-
-	private List<Rent> rents;
+	
+	private Rent rent;
 	
 	private Bookshelf bookshelf;
 
@@ -99,13 +99,12 @@ public class Book implements Serializable {
 		this.bookshelf = bookshelf;
 	}
 
-	@OneToMany(mappedBy = "books")
-	public List<Rent> getRents() {
-		return rents;
+	public Rent getRent() {
+		return rent;
 	}
 
-	public void setRents(List<Rent> rents) {
-		this.rents = rents;
+	public void setRent(Rent rent) {
+		this.rent = rent;
 	}
 
 }

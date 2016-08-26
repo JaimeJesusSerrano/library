@@ -46,8 +46,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book transform(BookDTO book) {
-		return dozer.map(book, Book.class);
+	public Book transform(BookDTO bookDTO) {
+		return dozer.map(bookDTO, Book.class);
 	}
 
 	@Override
@@ -70,16 +70,18 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void delete(Integer id) {
-		Boolean isit = hasBeenUsed(id);
-		log.debug(String.format("Buscando %s", isit));
-		if (hasBeenUsed(id)) {
+//		We need aded expetion to controller to avoid not exist
+		Integer numberOfTimesRented = numberOfTimesRented(id);
+		log.debug(String.format("Number of times rented the book with id %s : %s", id, numberOfTimesRented));
+		if (numberOfTimesRented == 0) {
 			bookDao.delete(id);
 		}
 	}
 
 	@Override
-	public boolean hasBeenUsed(Integer id) {
-		return bookDao.hasBeenUsed(id);
+	public Integer numberOfTimesRented(Integer id) {
+		Book book = bookDao.findOne(id);
+		return bookDao.hasBeenUsed(book);
 	}
 
 }

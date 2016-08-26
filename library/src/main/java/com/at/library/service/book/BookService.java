@@ -10,25 +10,25 @@ public interface BookService {
 	/**
 	 * Realiza la busqueda de todos los libros existentes
 	 * 
-	 * @return listado de libros
+	 * @return book list
 	 */
 	public List<BookDTO> findAll();
 
 	/**
-	 * Transfrma un libro en un libroDTO
+	 * Transform book to bookDTO
 	 * 
 	 * @param book
-	 * @return
+	 * @return bookDTO
 	 */
 	public BookDTO transform(Book book);
 
 	/**
-	 * Transforma un libroDTO en un libro
+	 * Transform bookDTO to book
 	 * 
-	 * @param book
-	 * @return
+	 * @param bookDTO
+	 * @return book
 	 */
-	public Book transform(BookDTO book);
+	public Book transform(BookDTO bookDTO);
 	
 	public BookDTO findById(Integer id);
 	
@@ -43,18 +43,18 @@ public interface BookService {
 	public void update(BookDTO bookDTO);
 	
 	/**
-	 * Delete a book never rented
+	 * Delete a book that never has been rented
 	 * 
 	 * @param id
 	 */
 	public void delete(Integer id);
 	
 	/**
-	 * A book has been used
+	 * Number of times that a book has been rented
 	 * 
 	 * @param id
-	 * @return
+	 * @return number of times rented
 	 */
-	public boolean hasBeenUsed(Integer id);
+	public Integer numberOfTimesRented(Integer id);
 
 }

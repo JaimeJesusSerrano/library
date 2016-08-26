@@ -16,37 +16,42 @@ import com.at.library.service.book.BookService;
 
 @RestController
 @RequestMapping(value = "/book")
-public class BookController {
+public class BookController extends Controller<BookDTO> {
 	
 	private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
 	@Autowired
 	private BookService bookservice;
 
+	@Override
 	@RequestMapping(method = { RequestMethod.GET })
 	public List<BookDTO> getAll() {
 		log.debug(String.format("Buscando todos los libros del sistema"));
 		return bookservice.findAll();
 	}
 
+	@Override
 	@RequestMapping(method = { RequestMethod.POST })
 	public BookDTO create(@RequestBody BookDTO bookDTO) {
 		log.debug(String.format("Vamos a crear el libro siguiente %s", bookDTO));
 		return bookservice.create(bookDTO);
 	}
 
+	@Override
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
 	public BookDTO findById(@PathVariable("id") Integer id) {
 		log.debug(String.format("Vamos a recuperar el libro con el siguiente id %s", id));
 		return bookservice.findById(id);
 	}
 
+	@Override
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
 	public void update(@PathVariable("id") Integer id, @RequestBody BookDTO bookDTO) {
 		log.debug(String.format("Vamos a actualizar el libro con el siguiente id %s", id));
 		bookservice.update(bookDTO);
 	}
 
+	@Override
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
 	public void delete(@PathVariable("id") Integer id) {
 		log.debug(String.format("Vamos a actualizar el libro con el siguiente id %s", id));

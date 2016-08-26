@@ -30,14 +30,6 @@ public class BookServiceImpl implements BookService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<BookDTO> findAll() {
-		BookDTO book1 = new BookDTO();
-		book1.setIsbn("00001");
-		book1.setTitle("La pata coja");
-		book1.setAuthor("Yo mismo");
-		Book book2 = transform(book1);
-		bookDao.save(book2);
-		
-		
 		final Iterable<Book> findAll = bookDao.findAll();
 		final Iterator<Book> iterator = findAll.iterator();
 		final List<BookDTO> res = new ArrayList<>();

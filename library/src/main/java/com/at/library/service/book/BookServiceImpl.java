@@ -66,7 +66,14 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void delete(Integer id) {
-		bookDao.delete(id);
+		if (hasBeenUsed(id)) {
+			bookDao.delete(id);
+		}
+	}
+
+	@Override
+	public boolean hasBeenUsed(Integer id) {
+		return false;
 	}
 
 }

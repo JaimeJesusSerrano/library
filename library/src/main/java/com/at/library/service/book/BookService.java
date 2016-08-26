@@ -42,6 +42,13 @@ public interface BookService {
 	
 	public void update(BookDTO bookDTO);
 	
+	/**
+	 * Delete a book never rented
+	 * 
+	 * @param id
+	 */
 	public void delete(Integer id);
+	
+	public boolean hasBeenUsed(Integer id);
 
 }

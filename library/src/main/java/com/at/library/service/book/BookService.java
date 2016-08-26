@@ -32,6 +32,12 @@ public interface BookService {
 	
 	public BookDTO findById(Integer id);
 	
+	/**
+	 * Create a book
+	 * 
+	 * @param bookDTO
+	 * @return
+	 */
 	public BookDTO create(BookDTO bookDTO);
 	
 	public void update(BookDTO bookDTO);

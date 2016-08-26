@@ -46,7 +46,7 @@ public class BookDTO extends DTO {
 
 	@Override
 	public String toString() {
-		return "";
+		return "BookDTO [id=" + id + ", isbn=" + isbn + ", title=" + title + ", author=" + author + "]";
 	}
 
 }

@@ -1,8 +1,6 @@
 package com.at.library.dto;
 
-import java.io.Serializable;
-
-public class BookDTO implements Serializable {
+public class BookDTO extends DTO {
 
 	private static final long serialVersionUID = 1583585532736761521L;
 
@@ -44,6 +42,11 @@ public class BookDTO implements Serializable {
 
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+
+	@Override
+	public String toString() {
+		return "";
 	}
 
 }

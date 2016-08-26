@@ -35,7 +35,7 @@ public class Book implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 	
-	@OneToOne
+	@OneToOne(optional = true)
 	private Bookshelf bookshelf;
 
 	public Integer getId() {

@@ -49,6 +49,12 @@ public interface BookService {
 	 */
 	public void delete(Integer id);
 	
+	/**
+	 * A book has been used
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public boolean hasBeenUsed(Integer id);
 
 }

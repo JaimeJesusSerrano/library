@@ -6,12 +6,14 @@ import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.ClientDao;
 import com.at.library.dto.ClientDTO;
 import com.at.library.model.Client;
 
+@Service
 public class ClientServiceImpl implements ClientService {
 	
 	@Autowired

@@ -8,7 +8,7 @@ import com.at.library.model.Book;
 public interface BookService {
 
 	/**
-	 * Realiza la busqueda de todos los libros existentes
+	 * Get all books of the system
 	 * 
 	 * @return book list
 	 */
@@ -30,6 +30,12 @@ public interface BookService {
 	 */
 	public Book transform(BookDTO bookDTO);
 	
+	/**
+	 * Find book by id
+	 * 
+	 * @param id
+	 * @return book
+	 */
 	public BookDTO findById(Integer id);
 	
 	/**
@@ -40,6 +46,11 @@ public interface BookService {
 	 */
 	public BookDTO create(BookDTO bookDTO);
 	
+	/**
+	 * Update a book
+	 * 
+	 * @param bookDTO
+	 */
 	public void update(BookDTO bookDTO);
 	
 	/**

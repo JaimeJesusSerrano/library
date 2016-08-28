@@ -13,7 +13,7 @@ public class RentPK implements Serializable {
 	
 	private static final long serialVersionUID = -7738526754452207141L;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date initDate;
 
 	@OneToOne

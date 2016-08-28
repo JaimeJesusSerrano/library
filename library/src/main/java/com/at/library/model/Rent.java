@@ -26,7 +26,7 @@ public class Rent implements Serializable {
 	@OneToOne
 	private Client client;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date endDate;
 	
 	@Transient

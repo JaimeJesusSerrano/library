@@ -11,8 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.at.library.dao.BookDao;
+import com.at.library.dao.ClientDao;
 import com.at.library.dao.RentDao;
 import com.at.library.dto.RentPostDTO;
+import com.at.library.model.Book;
+import com.at.library.model.Client;
 import com.at.library.model.Rent;
 
 @Service
@@ -20,6 +24,12 @@ public class RentServiceImpl implements RentService {
 	
 	@Autowired
 	private RentDao rentDao;
+	
+	@Autowired
+	private BookDao bookDao;
+	
+	@Autowired
+	private ClientDao clientDao;
 	
 	@Autowired
 	private DozerBeanMapper dozer;
@@ -57,14 +67,21 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public RentPostDTO create(RentPostDTO rentPostDTO) {
 		final Rent rent = transform(rentPostDTO);
+		
+		Book book = bookDao.findOne(rentPostDTO.getIdBook());
+		Client client = clientDao.findOne(rentPostDTO.getIdClient());
+		
+		rent.setBook(book);
+		rent.setClient(client);
+		
 		final Date date = new Date();
-		final Calendar calendar = Calendar.getInstance();
+//		final Calendar calendar = Calendar.getInstance();
 		
 		rent.setInitDate(date);
-		calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_YEAR, 3);
-        final Date endDate = calendar.getTime();
-		rent.setEndDate(endDate);
+//		calendar.setTime(date);
+//        calendar.add(Calendar.DAY_OF_YEAR, 3);
+//        final Date endDate = calendar.getTime();
+//		rent.setEndDate(endDate);
 		
 		return transform(rentDao.save(rent));
 	}

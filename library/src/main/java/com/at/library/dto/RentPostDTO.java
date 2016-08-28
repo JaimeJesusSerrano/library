@@ -4,18 +4,18 @@ public class RentPostDTO extends DTO {
 
 	private static final long serialVersionUID = 8455358489135351607L;
 	
-	private Integer idLibro;
+	private Integer idBook;
 	
 	private Integer idClient;
 	
 	private Integer idEmployee;
 
-	public Integer getIdLibro() {
-		return idLibro;
+	public Integer getIdBook() {
+		return idBook;
 	}
 
-	public void setIdLibro(Integer idLibro) {
-		this.idLibro = idLibro;
+	public void setIdBook(Integer idBook) {
+		this.idBook = idBook;
 	}
 
 	public Integer getIdClient() {
@@ -36,7 +36,7 @@ public class RentPostDTO extends DTO {
 
 	@Override
 	public String toString() {
-		return "RentPostDTO [idLibro=" + idLibro + ", idClient=" + idClient + ", idEmployee=" + idEmployee + "]";
+		return "RentPostDTO [idLibro=" + idBook + ", idClient=" + idClient + ", idEmployee=" + idEmployee + "]";
 	}
 	
 }

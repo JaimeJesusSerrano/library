@@ -1,6 +1,6 @@
 package com.at.library.service.client;
 
-import java.util.List;
+import java.util.Set;
 
 import com.at.library.dto.ClientDTO;
 import com.at.library.model.Client;
@@ -12,7 +12,7 @@ public interface ClientService {
 	 * 
 	 * @return book list
 	 */
-	public List<ClientDTO> findAll();
+	public Set<ClientDTO> findAll();
 	
 	/**
 	 * Transform client to clientDTO

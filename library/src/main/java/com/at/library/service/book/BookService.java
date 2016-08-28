@@ -1,6 +1,6 @@
 package com.at.library.service.book;
 
-import java.util.List;
+import java.util.Set;
 
 import com.at.library.dto.BookDTO;
 import com.at.library.model.Book;
@@ -10,9 +10,9 @@ public interface BookService {
 	/**
 	 * Get all books of the system
 	 * 
-	 * @return book list
+	 * @return book set
 	 */
-	public List<BookDTO> findAll();
+	public Set<BookDTO> findAll();
 
 	/**
 	 * Transform book to bookDTO

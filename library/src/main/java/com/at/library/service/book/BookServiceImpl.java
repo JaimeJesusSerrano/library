@@ -1,9 +1,9 @@
 package com.at.library.service.book;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
@@ -30,10 +30,10 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<BookDTO> findAll() {
+	public Set<BookDTO> findAll() {
 		final Iterable<Book> findAll = bookDao.findAll();
 		final Iterator<Book> iterator = findAll.iterator();
-		final List<BookDTO> res = new ArrayList<>();
+		final Set<BookDTO> res = new HashSet<>();
 		while (iterator.hasNext()) {
 			final Book b = iterator.next();
 			final BookDTO bDTO = transform(b);

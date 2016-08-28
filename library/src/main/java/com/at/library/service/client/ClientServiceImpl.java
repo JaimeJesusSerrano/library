@@ -1,8 +1,8 @@
 package com.at.library.service.client;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +24,10 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ClientDTO> findAll() {
+	public Set<ClientDTO> findAll() {
 		final Iterable<Client> findAll = clientDao.findAll();
 		final Iterator<Client> iterator = findAll.iterator();
-		final List<ClientDTO> res = new ArrayList<>();
+		final Set<ClientDTO> res = new HashSet<>();
 		while (iterator.hasNext()) {
 			final Client c = iterator.next();
 			final ClientDTO cDTO = transform(c);

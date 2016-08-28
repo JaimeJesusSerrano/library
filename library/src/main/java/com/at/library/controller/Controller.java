@@ -1,6 +1,6 @@
 package com.at.library.controller;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public abstract class Controller<T> {
 
 	@RequestMapping(method = { RequestMethod.GET })
-	public abstract List<T> getAll();
+	public abstract Set<T> getAll();
 
 	@RequestMapping(method = { RequestMethod.POST })
 	public abstract T create(@RequestBody T t);

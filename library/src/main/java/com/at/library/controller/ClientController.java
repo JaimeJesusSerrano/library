@@ -1,6 +1,6 @@
 package com.at.library.controller;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +17,7 @@ public class ClientController extends Controller<ClientDTO> {
 	private ClientService clientService;
 
 	@Override
-	public List<ClientDTO> getAll() {
+	public Set<ClientDTO> getAll() {
 		clientService.findAll();
 		return null;
 	}

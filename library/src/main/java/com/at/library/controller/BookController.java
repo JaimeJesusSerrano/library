@@ -1,6 +1,6 @@
 package com.at.library.controller;
 
-import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class BookController extends Controller<BookDTO> {
 
 	@Override
 	@RequestMapping(method = { RequestMethod.GET })
-	public List<BookDTO> getAll() {
+	public Set<BookDTO> getAll() {
 		log.debug(String.format("Getting all books"));
 		return bookservice.findAll();
 	}

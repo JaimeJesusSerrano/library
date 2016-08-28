@@ -10,7 +10,7 @@ public interface ClientService {
 	/**
 	 * Get all clients of the system
 	 * 
-	 * @return book list
+	 * @return set of clients
 	 */
 	public Set<ClientDTO> findAll();
 	

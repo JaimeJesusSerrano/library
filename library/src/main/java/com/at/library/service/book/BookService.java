@@ -10,7 +10,7 @@ public interface BookService {
 	/**
 	 * Get all books of the system
 	 * 
-	 * @return book set
+	 * @return set of books
 	 */
 	public Set<BookDTO> findAll();
 

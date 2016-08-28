@@ -20,7 +20,7 @@ public class Rent implements Serializable {
 	@EmbeddedId
 	private RentPK rentPK;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	private Employee employee;
 	
 	@OneToOne

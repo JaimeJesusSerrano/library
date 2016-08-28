@@ -3,7 +3,9 @@ package com.at.library.controller;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.ClientDTO;
@@ -17,30 +19,32 @@ public class ClientController extends Controller<ClientDTO> {
 	private ClientService clientService;
 
 	@Override
+	@RequestMapping(method = { RequestMethod.GET })
 	public Set<ClientDTO> getAll() {
-		clientService.findAll();
-		return null;
+		return clientService.findAll();
 	}
 
 	@Override
-	public ClientDTO create(ClientDTO t) {
-		// TODO Auto-generated method stub
-		return null;
+	@RequestMapping(method = { RequestMethod.POST })
+	public ClientDTO create(@RequestBody ClientDTO clientDTO) {
+		return clientService.create(clientDTO);
 	}
 
 	@Override
+	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
 	public ClientDTO findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return clientService.findById(id);
 	}
 
 	@Override
+	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
 	public void update(Integer id, ClientDTO t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
+	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
 		

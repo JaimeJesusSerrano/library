@@ -29,4 +29,20 @@ public interface ClientService {
 	 * @return client
 	 */
 	public Client transform(ClientDTO clientDTO);
+	
+	/**
+	 * Find client by id
+	 * 
+	 * @param id
+	 * @return clientDTO
+	 */
+	public ClientDTO findById(Integer id);
+	
+	/**
+	 * Create a client
+	 * 
+	 * @param clientDTO
+	 * @return clientDTO created
+	 */
+	public ClientDTO create(ClientDTO clientDTO);
 }

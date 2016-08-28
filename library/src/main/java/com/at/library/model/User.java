@@ -1,12 +1,15 @@
 package com.at.library.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -23,6 +26,9 @@ public class User implements Serializable {
 	private String surname;
 	
 	private String dni;
+	
+	@Temporal(TemporalType.DATE)
+	private Date registrationDate;
 
 	public Integer getId() {
 		return id;
@@ -54,6 +60,14 @@ public class User implements Serializable {
 
 	public void setDni(String dni) {
 		this.dni = dni;
+	}
+
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
 	}
 
 }

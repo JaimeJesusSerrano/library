@@ -34,7 +34,7 @@ public interface BookService {
 	 * Find book by id
 	 * 
 	 * @param id
-	 * @return book
+	 * @return bookDTO
 	 */
 	public BookDTO findById(Integer id);
 	
@@ -42,7 +42,7 @@ public interface BookService {
 	 * Create a book
 	 * 
 	 * @param bookDTO
-	 * @return
+	 * @return bookDTO created
 	 */
 	public BookDTO create(BookDTO bookDTO);
 	

@@ -1,5 +1,10 @@
 package com.at.library.dto;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import com.at.library.enums.StatusEnum;
+
 public class BookDTO extends DTO {
 
 	private static final long serialVersionUID = 1583585532736761521L;
@@ -11,6 +16,9 @@ public class BookDTO extends DTO {
 	private String title;
 
 	private String author;
+	
+	@Enumerated(EnumType.STRING)
+	private StatusEnum status;
 
 	public Integer getId() {
 		return id;
@@ -43,10 +51,19 @@ public class BookDTO extends DTO {
 	public void setAuthor(String author) {
 		this.author = author;
 	}
+	
+		public StatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusEnum status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {
-		return "BookDTO [id=" + id + ", isbn=" + isbn + ", title=" + title + ", author=" + author + "]";
+		return "BookDTO [id=" + id + ", isbn=" + isbn + ", title=" + title + ", author=" + author + ", status=" + status
+				+ "]";
 	}
 
 }

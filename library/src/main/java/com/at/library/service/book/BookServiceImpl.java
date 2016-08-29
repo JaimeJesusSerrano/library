@@ -68,13 +68,14 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void update(BookDTO bookDTO) {
+//		We need added exception to verify the options
 		final Book book = transform(bookDTO);
 		transform(bookDao.save(book));
 	}
 
 	@Override
 	public void delete(Integer id) {
-//		We need aded expetion to controller to avoid not exist
+//		We need added exception to controller to avoid not exist
 		Integer numberOfTimesRented = numberOfTimesRented(id);
 		log.debug(String.format("Number of times rented the book with id %s : %s", id, numberOfTimesRented));
 		if (numberOfTimesRented == 0) {

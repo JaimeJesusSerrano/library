@@ -38,9 +38,8 @@ public class RentController extends Controller<RentPostDTO> {
 
 	@Override
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
-	public void update(Integer id, RentPostDTO t) {
-		// TODO Auto-generated method stub
-		
+	public void update(Integer id, RentPostDTO rentPostDTO) {
+		rentService.update(rentPostDTO);
 	}
 
 	@Override

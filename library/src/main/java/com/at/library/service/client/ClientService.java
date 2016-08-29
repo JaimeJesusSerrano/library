@@ -45,4 +45,16 @@ public interface ClientService {
 	 * @return clientDTO created
 	 */
 	public ClientDTO create(ClientDTO clientDTO);
+	
+	/**
+	 * Auto penalize clients
+	 * 
+	 */
+	public void penalize();
+	
+	/**
+	 * Auto forgive clients
+	 * 
+	 */
+	public void forgive();
 }

@@ -6,7 +6,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.dozer.DozerBeanMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,15 +17,30 @@ import com.at.library.dao.ClientDao;
 import com.at.library.dto.ClientDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.model.Client;
+import com.at.library.service.book.BookServiceImpl;
 
 @Service
 public class ClientServiceImpl implements ClientService {
+	
+	private static final Logger log = LoggerFactory.getLogger(ClientServiceImpl.class);
 	
 	@Autowired
 	private ClientDao clientDao;
 
 	@Autowired
 	private DozerBeanMapper dozer;
+	
+	@Override
+	@Scheduled(cron = "0 0 0/4 1/1 * ? *")
+	public void penalize() {
+		log.debug("Time starts to penalize users");
+	}
+	
+	@Override
+	@Scheduled(cron = "0 0 0/4 1/1 * ? *")
+	public void forgive() {
+		log.debug("Time starts to forgive users");
+	}
 
 	@Override
 	@Transactional(readOnly = true)

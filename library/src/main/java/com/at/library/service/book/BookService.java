@@ -67,5 +67,21 @@ public interface BookService {
 	 * @return number of times rented
 	 */
 	public Integer numberOfTimesRented(Integer id);
+	
+	/**
+	 * Get bookDTO by id
+	 * 
+	 * @param id
+	 * @return BookDTO
+	 */
+	public BookDTO getBookDTOById(Integer id);
+	
+	/**
+	 * Get book by id
+	 * 
+	 * @param id
+	 * @return Book
+	 */
+	public Book getBookById(Integer id);
 
 }

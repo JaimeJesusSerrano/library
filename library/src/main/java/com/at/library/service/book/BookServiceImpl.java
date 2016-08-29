@@ -89,4 +89,14 @@ public class BookServiceImpl implements BookService {
 		return bookDao.hasBeenUsed(book);
 	}
 
+	@Override
+	public BookDTO getBookDTOById(Integer id) {
+		return transform(getBookById(id));
+	}
+
+	@Override
+	public Book getBookById(Integer id) {
+		return bookDao.findOne(id);
+	}
+
 }

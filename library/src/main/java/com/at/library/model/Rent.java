@@ -5,12 +5,16 @@ import java.util.Date;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import com.at.library.enums.RentStatusEnum;
 
 @Entity
 public class Rent implements Serializable {
@@ -28,6 +32,9 @@ public class Rent implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
+	
+	@Enumerated(EnumType.STRING)
+	private RentStatusEnum status;
 	
 	@Transient
 	public Date getInitDate() {

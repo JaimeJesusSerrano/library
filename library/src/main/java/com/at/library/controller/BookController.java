@@ -1,5 +1,6 @@
 package com.at.library.controller;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookDTO;
@@ -25,7 +27,8 @@ public class BookController extends Controller<BookDTO> {
 
 	@Override
 	@RequestMapping(method = { RequestMethod.GET })
-	public Set<BookDTO> getAll() {
+	public Set<BookDTO> getAll(@RequestParam(required = false) Map<String,String> requestParams) {
+		log.debug(String.format("The aditional parameters is %s", requestParams.toString()));
 		log.debug(String.format("Getting all books"));
 		return bookservice.findAll();
 	}

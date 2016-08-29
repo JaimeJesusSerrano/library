@@ -1,11 +1,13 @@
 package com.at.library.controller;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.ClientDTO;
@@ -20,7 +22,7 @@ public class ClientController extends Controller<ClientDTO> {
 
 	@Override
 	@RequestMapping(method = { RequestMethod.GET })
-	public Set<ClientDTO> getAll() {
+	public Set<ClientDTO> getAll(@RequestParam(required = false) Map<String,String> requestParams) {
 		return clientService.findAll();
 	}
 

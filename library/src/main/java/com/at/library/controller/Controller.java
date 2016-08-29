@@ -1,16 +1,18 @@
 package com.at.library.controller;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public abstract class Controller<T> {
 
 	@RequestMapping(method = { RequestMethod.GET })
-	public abstract Set<T> getAll();
+	public abstract Set<T> getAll(@RequestParam Map<String,String> requestParams);
 
 	@RequestMapping(method = { RequestMethod.POST })
 	public abstract T create(@RequestBody T t);

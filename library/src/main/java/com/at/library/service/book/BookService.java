@@ -84,20 +84,4 @@ public interface BookService {
 	 */
 	public Book getBookById(Integer id);
 	
-	/**
-	 * Set bookDTO from bookDTO
-	 * 
-	 * @param bookDTO
-	 * @return BookDTO
-	 */
-	public BookDTO setBookDTOByBookDTO(BookDTO bookDTO);
-	
-	/**
-	 * Set book from bookDTO
-	 * 
-	 * @param bookDTO
-	 * @return Book
-	 */
-	public Book setBookByBookDTO(BookDTO bookDTO);
-
 }

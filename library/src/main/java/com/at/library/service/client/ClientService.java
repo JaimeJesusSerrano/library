@@ -2,7 +2,9 @@ package com.at.library.service.client;
 
 import java.util.Set;
 
+import com.at.library.dto.BookDTO;
 import com.at.library.dto.ClientDTO;
+import com.at.library.model.Book;
 import com.at.library.model.Client;
 
 public interface ClientService {
@@ -47,14 +49,30 @@ public interface ClientService {
 	public ClientDTO create(ClientDTO clientDTO);
 	
 	/**
+	 * Get clientDTO by id
+	 * 
+	 * @param id
+	 * @return ClientDTO
+	 */
+	public ClientDTO getClientDTOById(Integer id);
+	
+	/**
+	 * Get client by id
+	 * 
+	 * @param id
+	 * @return Client
+	 */
+	public Client getClientById(Integer id);
+	
+	/**
 	 * Auto penalize clients
 	 * 
 	 */
-	public void penalize();
+//	public void penalize();
 	
 	/**
 	 * Auto forgive clients
 	 * 
 	 */
-	public void forgive();
+//	public void forgive();
 }

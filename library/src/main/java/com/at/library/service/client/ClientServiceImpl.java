@@ -30,17 +30,17 @@ public class ClientServiceImpl implements ClientService {
 	@Autowired
 	private DozerBeanMapper dozer;
 	
-	@Override
-	@Scheduled(cron = "0 0 0/4 1/1 * ? *")
-	public void penalize() {
-		log.debug("Time starts to penalize users");
-	}
-	
-	@Override
-	@Scheduled(cron = "0 0 0/4 1/1 * ? *")
-	public void forgive() {
-		log.debug("Time starts to forgive users");
-	}
+//	@Override
+//	@Scheduled(cron = "0 0 0/4 1/1 * ? *")
+//	public void penalize() {
+//		log.debug("Time starts to penalize users");
+//	}
+//	
+//	@Override
+//	@Scheduled(cron = "0 0 0/4 1/1 * ? *")
+//	public void forgive() {
+//		log.debug("Time starts to forgive users");
+//	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -79,6 +79,16 @@ public class ClientServiceImpl implements ClientService {
 		client.setRegistrationDate(new Date());
 		client.setStatus(StatusEnum.valueOf("ACTIVE"));
 		return transform(clientDao.save(client));
+	}
+
+	@Override
+	public ClientDTO getClientDTOById(Integer id) {
+		return transform(getClientById(id));
+	}
+
+	@Override
+	public Client getClientById(Integer id) {
+		return clientDao.findOne(id);
 	}
 
 }

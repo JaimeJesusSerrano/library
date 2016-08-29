@@ -3,7 +3,7 @@ package com.at.library.dto;
 public class RentPostDTO extends DTO {
 
 	private static final long serialVersionUID = 8455358489135351607L;
-	
+
 	private Integer idBook;
 	
 	private Integer idClient;

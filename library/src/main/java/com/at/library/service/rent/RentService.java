@@ -46,4 +46,11 @@ public interface RentService {
 	 */
 	public RentPostDTO create(RentPostDTO rentPostDTO);
 	
+	/**
+	 * Update a rent
+	 * 
+	 * @param RentPostDTO
+	 */
+	public void update (RentPostDTO rentPostDTO);
+	
 }

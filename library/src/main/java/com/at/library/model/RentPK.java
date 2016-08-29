@@ -19,6 +19,14 @@ public class RentPK implements Serializable {
 	@OneToOne
 	private Book book;
 	
+//	public RentPK(){}
+//	
+//	public RentPK(Date initDate, Book book) {
+//		super();
+//		this.initDate = initDate;
+//		this.book = book;
+//	}
+
 	public Date getInitDate() {
 		return initDate;
 	}

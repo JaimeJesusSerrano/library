@@ -21,6 +21,28 @@ public class Rent implements Serializable {
 
 	private static final long serialVersionUID = 1560692319680192039L;
 	
+//	public Rent(){};
+//	
+//	public Rent(Book book, Date initDate, Employee employee, Client client, Date endDate, RentStatusEnum status) {
+//		super();
+//		this.rentPK.setBook(book);
+//		this.rentPK.setInitDate(initDate);
+//		this.employee = employee;
+//		this.client = client;
+//		this.endDate = endDate;
+//		this.status = status;
+//	}
+//	
+//	public Rent(Book book, Date initDate, Client client) {
+//		super();
+//		this.rentPK.setBook(book);
+//		this.rentPK.setInitDate(initDate);
+////		this.employee = employee;
+//		this.client = client;
+////		this.endDate = endDate;
+////		this.status = status;
+//	}
+
 	@EmbeddedId
 	private RentPK rentPK;
 	
@@ -53,7 +75,7 @@ public class Rent implements Serializable {
 
 	@Transient
 	public void setBook(Book book) {
-		rentPK.setBook(book);
+		this.rentPK.setBook(book);
 	}
 
 	public Employee getEmployee() {
@@ -78,6 +100,14 @@ public class Rent implements Serializable {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public RentStatusEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(RentStatusEnum status) {
+		this.status = status;
 	}
 	
 }

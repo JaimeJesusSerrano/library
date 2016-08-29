@@ -3,6 +3,7 @@ package com.at.library.service.book;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.dozer.DozerBeanMapper;
@@ -30,16 +31,33 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<BookDTO> findAll() {
-		final Iterable<Book> findAll = bookDao.findAll();
-		final Iterator<Book> iterator = findAll.iterator();
-		final Set<BookDTO> res = new HashSet<>();
-		while (iterator.hasNext()) {
-			final Book b = iterator.next();
-			final BookDTO bDTO = transform(b);
-			res.add(bDTO);
+	public Set<BookDTO> findAll(Map<String,String> requestParams) {
+		
+		final Iterable<Book> books;
+		if (requestParams.isEmpty()) {
+			books = bookDao.findAll();
 		}
-		return res;
+		else {
+			books = search(requestParams);
+		}
+		
+		final Iterator<Book> iteratorBooks = books.iterator();
+		final Set<BookDTO> BooksDTO = new HashSet<>();
+		while (iteratorBooks.hasNext()) {
+			final Book book = iteratorBooks.next();
+			final BookDTO bookDTO = transform(book);
+			log.debug(String.format("bookDTO search : %s", bookDTO));
+			BooksDTO.add(bookDTO);
+		}
+		return BooksDTO;
+	}
+	
+	private Set<Book> search(Map<String,String> requestParams) {
+		String isbn = requestParams.get("isbn");
+		String title = requestParams.get("title");
+		String author = requestParams.get("author");
+		
+		return bookDao.search(isbn, title, author);
 	}
 
 	@Override

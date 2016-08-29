@@ -1,5 +1,6 @@
 package com.at.library.service.book;
 
+import java.util.Map;
 import java.util.Set;
 
 import com.at.library.dto.BookDTO;
@@ -10,9 +11,10 @@ public interface BookService {
 	/**
 	 * Get all books of the system
 	 * 
+	 * @param optionals requestParams to search
 	 * @return set of books
 	 */
-	public Set<BookDTO> findAll();
+	public Set<BookDTO> findAll(Map<String,String> requestParams);
 
 	/**
 	 * Transform book to bookDTO

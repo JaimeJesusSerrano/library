@@ -30,7 +30,7 @@ public class BookController extends Controller<BookDTO> {
 	public Set<BookDTO> getAll(@RequestParam(required = false) Map<String,String> requestParams) {
 		log.debug(String.format("The aditional parameters is %s", requestParams.toString()));
 		log.debug(String.format("Getting all books"));
-		return bookservice.findAll();
+		return bookservice.findAll(requestParams);
 	}
 
 	@Override

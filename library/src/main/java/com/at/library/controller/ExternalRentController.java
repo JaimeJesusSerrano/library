@@ -16,7 +16,7 @@ public class ExternalRentController {
 	
 	@RequestMapping(method = { RequestMethod.GET })
 	public void getAll() {
-		externRentService.migrationOfBooksInBadRents();
+		externRentService.migrationOfBooksInExternRents();
 	}
 	
 }

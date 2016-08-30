@@ -36,6 +36,7 @@ public class ExternRentServiceImpl implements ExternRentService {
 			page++;
 			
 			for (ExternRentDTO ExternRentDTO: externRentsDTO) {
+//				Have to check the coming ids and discard repeated
 				BookDTO bookDTO = ExternRentDTO.getBookDTO();
 				bookDTO.setStatus(StatusEnum.valueOf("ACTIVE"));
 				bookService.create(bookDTO);

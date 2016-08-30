@@ -1,5 +1,6 @@
 package com.at.library.service.client;
 
+import java.util.Map;
 import java.util.Set;
 
 import com.at.library.dto.BookDTO;
@@ -14,7 +15,7 @@ public interface ClientService {
 	 * 
 	 * @return set of clients
 	 */
-	public Set<ClientDTO> findAll();
+	public Set<ClientDTO> findAll(Map<String,String> requestParams);
 	
 	/**
 	 * Transform client to clientDTO

@@ -23,7 +23,7 @@ public class ClientController extends Controller<ClientDTO> {
 	@Override
 	@RequestMapping(method = { RequestMethod.GET })
 	public Set<ClientDTO> getAll(@RequestParam(required = false) Map<String,String> requestParams) {
-		return clientService.findAll();
+		return clientService.findAll(requestParams);
 	}
 
 	@Override

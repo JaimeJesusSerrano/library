@@ -3,13 +3,13 @@ package com.at.library.service.client;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +17,6 @@ import com.at.library.dao.ClientDao;
 import com.at.library.dto.ClientDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.model.Client;
-import com.at.library.service.book.BookServiceImpl;
 
 @Service
 public class ClientServiceImpl implements ClientService {
@@ -44,17 +43,33 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<ClientDTO> findAll() {
-		final Iterable<Client> findAll = clientDao.findAll();
-		final Iterator<Client> iterator = findAll.iterator();
-		final Set<ClientDTO> res = new HashSet<>();
-		while (iterator.hasNext()) {
-			final Client c = iterator.next();
-			final ClientDTO cDTO = transform(c);
-			res.add(cDTO);
+	public Set<ClientDTO> findAll(Map<String,String> requestParams) {
+		
+		final Iterable<Client> clients;
+		if (requestParams.isEmpty()) {
+			clients = clientDao.findAll();
+		}
+		else {
+			clients = search(requestParams);
 		}
 		
-		return res;
+		final Iterator<Client> iteratorClients = clients.iterator();
+		final Set<ClientDTO> clientsDTO = new HashSet<>();
+		while (iteratorClients.hasNext()) {
+			final Client client = iteratorClients.next();
+			final ClientDTO clientDTO = transform(client);
+			log.debug(String.format("clientDTO search : %s", clientDTO));
+			clientsDTO.add(clientDTO);
+		}
+		return clientsDTO;
+	}
+	
+	private Set<Client> search(Map<String,String> requestParams) {
+		String name = requestParams.get("name");
+		String surname = requestParams.get("surname");
+		String dni = requestParams.get("dni");
+		
+		return clientDao.search(name, surname, dni);
 	}
 
 	@Override

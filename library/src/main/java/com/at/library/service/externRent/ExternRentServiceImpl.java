@@ -1,5 +1,9 @@
 package com.at.library.service.externRent;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +23,26 @@ public class ExternRentServiceImpl implements ExternRentService {
 	
 	private static final Logger log = LoggerFactory.getLogger(ExternRentServiceImpl.class);
 	
-	public void migrationOfBooksInBadRents() {
+	public void migrationOfBooksInExternRents() {
+		
+		RestTemplate restTemplate = new RestTemplate();
+		ExternRentDTO[] externRentsDTO;
+		
 		Integer page = 0;
 		Integer size = 20;
-		Boolean notEnd = true;
 		do {
 			final String url = "http://192.168.11.57:8080/rent?page="+page+"&size="+size;
-			final ExternRentDTO[] externRentsDTO = new RestTemplate().getForObject(url, ExternRentDTO[].class);
+			externRentsDTO = restTemplate.getForObject(url, ExternRentDTO[].class);
 			page++;
 			
-			if (externRentsDTO.length == 0) {
-				notEnd = false;
+			for (ExternRentDTO ExternRentDTO: externRentsDTO) {
+				BookDTO bookDTO = ExternRentDTO.getBookDTO();
+				bookDTO.setStatus(StatusEnum.valueOf("ACTIVE"));
+				bookService.create(bookDTO);
+				log.debug(String.format("BookDTO %s", bookDTO.toString()));
 			}
-			else {
-				for (ExternRentDTO ExternRentDTO: externRentsDTO) {
-					BookDTO bookDTO = ExternRentDTO.getBookDTO();
-					bookDTO.setStatus(StatusEnum.valueOf("ACTIVE"));
-					bookService.create(bookDTO);
-					log.debug(String.format("BookDTO %s", bookDTO.toString()));
-				}
-			}
-		} while (notEnd == true);
+			
+		} while (externRentsDTO.length > 0);
 	}
+	
 }

@@ -12,18 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.at.library.dao.BookDao;
-import com.at.library.dao.ClientDao;
 import com.at.library.dao.RentDao;
-import com.at.library.dto.BookDTO;
-import com.at.library.dto.ClientDTO;
 import com.at.library.dto.RentPostDTO;
-import com.at.library.enums.StatusEnum;
 import com.at.library.model.Book;
 import com.at.library.model.Client;
 import com.at.library.model.Rent;
 import com.at.library.service.book.BookService;
-import com.at.library.service.book.BookServiceImpl;
 import com.at.library.service.client.ClientService;
 
 @Service
@@ -59,12 +53,25 @@ public class RentServiceImpl implements RentService {
 
 	@Override
 	public RentPostDTO transform(Rent rent) {
-		return dozer.map(rent, RentPostDTO.class);
+//		return dozer.map(rent, RentPostDTO.class);
+		RentPostDTO rentPostDTO = new RentPostDTO();
+		rentPostDTO.setIdBook(rent.getBook().getId());
+		rentPostDTO.setIdClient(rent.getClient().getId());
+		
+		return rentPostDTO;
 	}
 
 	@Override
 	public Rent transform(RentPostDTO rentPostDTO) {
-		return dozer.map(rentPostDTO, Rent.class);
+//		return dozer.map(rentPostDTO, Rent.class);	
+		final Book book = bookService.getBookById(rentPostDTO.getIdBook());
+		final Client client = clientService.getClientById(rentPostDTO.getIdClient());
+		
+		Rent rent = new Rent();
+		rent.setBook(book);
+		rent.setClient(client);
+		
+		return rent;
 	}
 
 	@Override
@@ -75,48 +82,11 @@ public class RentServiceImpl implements RentService {
 
 	@Override
 	public RentPostDTO create(RentPostDTO rentPostDTO) {
-		final Rent rent = transform(rentPostDTO);
-		log.debug(String.format("RentDTS %s : ", rentPostDTO));
-		log.debug(String.format("Rent %s : ", rent));
 		
-
-
-		
-		
-//		final BookDTO bookDTO = bookService.findById(rentPostDTO.getIdBook());
-//		final Book book = bookService.transform(bookDTO);
-		final Book book = bookService.getBookById(rentPostDTO.getIdBook());
-		final BookDTO bookDTO = bookService.transform(book);
-		log.debug(String.format("Book %s : ", book));
-		log.debug(String.format("BookDTO %s : ", bookDTO));
-		Rent rent2 = new Rent();
-		rent2.setBook(book);
-		log.debug(String.format("Book %s : ", book));
-//		if (book == null || book.getStatus().equals(StatusEnum.DISABLE)) {
-//			Throw exception
-//		}
-//		final ClientDTO clientDTO = clientService.findById(rentPostDTO.getIdClient());
-//		final Client client = clientService.transform(clientDTO);
-		final Client client = clientService.getClientById(rentPostDTO.getIdClient());
-		log.debug(String.format("Client %s : ", client));
-		
-//		rent.setBook(book);
-//		rent.setClient(client);
+		Rent rent = transform(rentPostDTO);
 		rent.setInitDate(new Date());
 		
 		return transform(rentDao.save(rent));
-		
-//		log.debug(String.format("RentDTS %s : ", rentPostDTO));
-//
-//		
-//		final Book book = bookService.getBookById(rentPostDTO.getIdBook());
-//		final Date initDate = new Date();
-//		final Client client = clientService.getClientById(rentPostDTO.getIdClient());
-//
-//		Rent rent = new Rent(book, initDate, client);
-//		log.debug(String.format("Rent %s : ", rent));
-//
-//		return transform(rentDao.save(rent));
 	}
 
 	@Override
@@ -124,5 +94,5 @@ public class RentServiceImpl implements RentService {
 		final Rent rent = transform(rentPostDTO);
 		rentDao.save(rent);
 	}
-
+	
 }

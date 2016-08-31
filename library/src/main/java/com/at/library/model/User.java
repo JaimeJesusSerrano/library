@@ -1,73 +1,42 @@
 package com.at.library.model;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
+
+import com.at.library.enums.StatusEnum;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class User implements Serializable {
+@PrimaryKeyJoinColumn(referencedColumnName = "id")
+public class Client extends User {
 
-	private static final long serialVersionUID = 8037196272531770185L;
-
-	@Id
-	@GeneratedValue
-	private Integer id;
+	private static final long serialVersionUID = -24600065830793754L;
 	
-	private String name;
-	
-	private String surname;
-	
-	private String dni;
-	
-	@Temporal(TemporalType.DATE)
-	private Date registrationDate;
+	@Enumerated(EnumType.STRING)
+	private StatusEnum status;
 
-	public Integer getId() {
-		return id;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+	private List<Rent> rents;
+
+	public List<Rent> getRents() {
+		return rents;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setRents(List<Rent> rents) {
+		this.rents = rents;
 	}
 
-	public String getName() {
-		return name;
+	public StatusEnum getStatus() {
+		return status;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getSurname() {
-		return surname;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-
-	public String getDni() {
-		return dni;
-	}
-
-	public void setDni(String dni) {
-		this.dni = dni;
-	}
-
-	public Date getRegistrationDate() {
-		return registrationDate;
-	}
-
-	public void setRegistrationDate(Date registrationDate) {
-		this.registrationDate = registrationDate;
+	public void setStatus(StatusEnum status) {
+		this.status = status;
 	}
 
 }

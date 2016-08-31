@@ -11,9 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import com.at.library.dao.BookDao;
-import com.at.library.dto.BookDTO;
+import com.at.library.dto.BookGetDTO;
+import com.at.library.dto.BookPostDTO;
+import com.at.library.dto.ExternRentDTO;
 import com.at.library.enums.BookStatusEnum;
 import com.at.library.model.Book;
 
@@ -30,7 +33,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<BookDTO> findAll(Map<String,String> requestParams) {
+	public Set<BookGetDTO> findAll(Map<String,String> requestParams) {
 		
 		final Iterable<Book> books;
 		if (requestParams.isEmpty()) {
@@ -41,10 +44,10 @@ public class BookServiceImpl implements BookService {
 		}
 		
 		final Iterator<Book> iteratorBooks = books.iterator();
-		final Set<BookDTO> booksDTO = new HashSet<>();
+		final Set<BookGetDTO> booksDTO = new HashSet<>();
 		while (iteratorBooks.hasNext()) {
 			final Book book = iteratorBooks.next();
-			final BookDTO bookDTO = transform(book);
+			final BookGetDTO bookDTO = transform(book);
 			log.debug(String.format("bookDTO search : %s", bookDTO));
 			booksDTO.add(bookDTO);
 		}
@@ -60,30 +63,33 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public BookDTO transform(Book book) {
-		return dozer.map(book, BookDTO.class);
+	public BookGetDTO transform(Book book) {
+		return dozer.map(book, BookGetDTO.class);
 	}
 
 	@Override
-	public Book transform(BookDTO bookDTO) {
-		return dozer.map(bookDTO, Book.class);
+	public Book transform(BookPostDTO bookPostDTO) {
+		return dozer.map(bookPostDTO, Book.class);
 	}
 
 	@Override
-	public BookDTO findById(Integer id) {
+	public BookGetDTO findById(Integer id) {
 		final Book book = bookDao.findOne(id);
 		return transform(book);
 	}
 
 	@Override
-	public BookDTO create(BookDTO bookDTO) {
-		final Book book = transform(bookDTO);
+	public BookGetDTO create(BookPostDTO bookPostDTO) {
+		final Book book = transform(bookPostDTO);
 		book.setStatus(BookStatusEnum.valueOf("OK"));
-		return transform(bookDao.save(book));
+		bookDao.save(book);
+		
+		BookGetDTO bookGetDTO = transform(book);
+		return getAndSetExternalExtraData(bookGetDTO);
 	}
 
 	@Override
-	public void update(BookDTO bookDTO) {
+	public void update(BookPostDTO bookDTO) {
 //		We need added exception to verify the options
 		final Book book = transform(bookDTO);
 		transform(bookDao.save(book));
@@ -106,13 +112,26 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public BookDTO getBookDTOById(Integer id) {
+	public BookGetDTO getBookDTOById(Integer id) {
 		return transform(getBookById(id));
 	}
 
 	@Override
 	public Book getBookById(Integer id) {
 		return bookDao.findOne(id);
+	}
+	
+	private BookGetDTO getAndSetExternalExtraData(BookGetDTO bookGetDTO) {
+//		https://www.googleapis.com/books/v1/volumes?q=
+		final String url = "https://www.googleapis.com/books/v1/volumes?q="+ bookGetDTO.getTitle();
+//		GoogleBookDTO googleBookDTO = new RestTemplate().getForObject(url, BookGetDTO.class);
+//		externRentsDTO = restTemplate.getForObject(url, ExternRentDTO[].class);
+		
+//		bookGetDTO.setYear(year);
+//		bookGetDTO.setImage(image);
+//		bookGetDTO.setDescription(description);
+		
+		return bookGetDTO;
 	}
 
 }

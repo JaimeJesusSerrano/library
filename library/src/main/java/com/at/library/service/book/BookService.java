@@ -3,7 +3,8 @@ package com.at.library.service.book;
 import java.util.Map;
 import java.util.Set;
 
-import com.at.library.dto.BookDTO;
+import com.at.library.dto.BookGetDTO;
+import com.at.library.dto.BookPostDTO;
 import com.at.library.model.Book;
 
 public interface BookService {
@@ -14,23 +15,23 @@ public interface BookService {
 	 * @param optionals requestParams to search
 	 * @return set of books
 	 */
-	public Set<BookDTO> findAll(Map<String,String> requestParams);
+	public Set<BookGetDTO> findAll(Map<String,String> requestParams);
 
 	/**
-	 * Transform book to bookDTO
+	 * Transform book to bookPostDTO
 	 * 
 	 * @param book
-	 * @return bookDTO
+	 * @return bookPostDTO
 	 */
-	public BookDTO transform(Book book);
+	public BookGetDTO transform(Book book);
 
 	/**
-	 * Transform bookDTO to book
+	 * Transform bookPostDTO to book
 	 * 
-	 * @param bookDTO
+	 * @param bookPostDTO
 	 * @return book
 	 */
-	public Book transform(BookDTO bookDTO);
+	public Book transform(BookPostDTO bookPostDTO);
 	
 	/**
 	 * Find book by id
@@ -38,7 +39,7 @@ public interface BookService {
 	 * @param id
 	 * @return bookDTO
 	 */
-	public BookDTO findById(Integer id);
+	public BookGetDTO findById(Integer id);
 	
 	/**
 	 * Create a book
@@ -46,14 +47,14 @@ public interface BookService {
 	 * @param bookDTO
 	 * @return bookDTO created
 	 */
-	public BookDTO create(BookDTO bookDTO);
+	public BookGetDTO create(BookPostDTO bookPostDTO);
 	
 	/**
 	 * Update a book
 	 * 
 	 * @param bookDTO
 	 */
-	public void update(BookDTO bookDTO);
+	public void update(BookPostDTO bookDTO);
 	
 	/**
 	 * Delete a book that never has been rented
@@ -76,7 +77,7 @@ public interface BookService {
 	 * @param id
 	 * @return BookDTO
 	 */
-	public BookDTO getBookDTOById(Integer id);
+	public BookGetDTO getBookDTOById(Integer id);
 	
 	/**
 	 * Get book by id

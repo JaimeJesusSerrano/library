@@ -12,6 +12,7 @@ import com.at.library.model.Book;
 @Repository
 public interface BookDao extends CrudRepository<Book, Integer> {
 
+//	(:isbn is NULL OR book.isbn like %:isbn%)
 	@Query(value = "SELECT book FROM Book AS book WHERE book.isbn like %:isbn% OR book.title like %:title% OR book.author like %:author%")
 	public Set<Book> search(
 			@Param("isbn") String isbn,

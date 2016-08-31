@@ -1,4 +1,4 @@
-package com.at.library.service.client;
+package com.at.library.service.user;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -13,18 +13,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.at.library.dao.ClientDao;
-import com.at.library.dto.ClientDTO;
-import com.at.library.enums.StatusEnum;
-import com.at.library.model.Client;
+import com.at.library.dao.UserDao;
+import com.at.library.dto.UserDTO;
+import com.at.library.model.User;
 
 @Service
-public class ClientServiceImpl implements ClientService {
+public class UserServiceImpl implements UserService {
 	
-	private static final Logger log = LoggerFactory.getLogger(ClientServiceImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	@Autowired
-	private ClientDao clientDao;
+	private UserDao userDao;
 
 	@Autowired
 	private DozerBeanMapper dozer;
@@ -43,67 +42,64 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<ClientDTO> findAll(Map<String,String> requestParams) {
+	public Set<UserDTO> findAll(Map<String,String> requestParams) {
 		
-		final Iterable<Client> clients;
+		final Iterable<User> users;
 		if (requestParams.isEmpty()) {
-			clients = clientDao.findAll();
+			users = userDao.findAll();
 		}
 		else {
-			clients = search(requestParams);
+			users = search(requestParams);
 		}
 		
-		final Iterator<Client> iteratorClients = clients.iterator();
-		final Set<ClientDTO> clientsDTO = new HashSet<>();
-		while (iteratorClients.hasNext()) {
-			final Client client = iteratorClients.next();
-			final ClientDTO clientDTO = transform(client);
-			log.debug(String.format("clientDTO search : %s", clientDTO));
-			clientsDTO.add(clientDTO);
+		final Iterator<User> iteratorUsers = users.iterator();
+		final Set<UserDTO> usersDTO = new HashSet<>();
+		while (iteratorUsers.hasNext()) {
+			final User user = iteratorUsers.next();
+			final UserDTO userDTO = transform(user);
+			usersDTO.add(userDTO);
 		}
-		return clientsDTO;
+		return usersDTO;
 	}
 	
-	private Set<Client> search(Map<String,String> requestParams) {
+	private Set<User> search(Map<String,String> requestParams) {
 		String name = requestParams.get("name");
-		String surname = requestParams.get("surname");
 		String dni = requestParams.get("dni");
 		
-		return clientDao.search(name, surname, dni);
+		return userDao.search(name, dni);
 	}
 
 	@Override
-	public ClientDTO transform(Client client) {
-		return dozer.map(client, ClientDTO.class);
+	public UserDTO transform(User user) {
+		return dozer.map(user, UserDTO.class);
 	}
 
 	@Override
-	public Client transform(ClientDTO clientDTO) {
-		return dozer.map(clientDTO, Client.class);
+	public User transform(UserDTO userDTO) {
+		return dozer.map(userDTO, User.class);
 	}
 
 	@Override
-	public ClientDTO findById(Integer id) {
-		Client client = clientDao.findOne(id);
-		return transform(client);
+	public UserDTO findById(Integer id) {
+		User user = userDao.findOne(id);
+		return transform(user);
 	}
 
 	@Override
-	public ClientDTO create(ClientDTO clientDTO) {
-		final Client client = transform(clientDTO);
-		client.setRegistrationDate(new Date());
-		client.setStatus(StatusEnum.valueOf("ACTIVE"));
-		return transform(clientDao.save(client));
+	public UserDTO create(UserDTO userDTO) {
+		final User user = transform(userDTO);
+		user.setRegistrationDate(new Date());
+		return transform(userDao.save(user));
 	}
 
 	@Override
-	public ClientDTO getClientDTOById(Integer id) {
-		return transform(getClientById(id));
+	public UserDTO getUserDTOById(Integer id) {
+		return transform(getUserById(id));
 	}
 
 	@Override
-	public Client getClientById(Integer id) {
-		return clientDao.findOne(id);
+	public User getUserById(Integer id) {
+		return userDao.findOne(id);
 	}
 
 }

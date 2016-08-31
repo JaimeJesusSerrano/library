@@ -7,15 +7,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.at.library.model.Client;
+import com.at.library.model.User;
 
 @Repository
-public interface ClientDao extends CrudRepository<Client, Integer> {
+public interface UserDao extends CrudRepository<User, Integer> {
 
-	@Query(value = "SELECT client FROM Client AS client WHERE client.name like %:name% OR client.surname like %:surname% OR client.dni like %:dni%")
-	public Set<Client> search(
+	@Query(value = "SELECT user FROM User AS user WHERE user.name like %:name% OR user.dni like %:dni%")
+	public Set<User> search(
 			@Param("name") String name,
-			@Param("surname") String surname,
 			@Param("dni") String dni
 			);
 

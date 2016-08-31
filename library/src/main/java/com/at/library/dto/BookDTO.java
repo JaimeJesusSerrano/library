@@ -3,7 +3,7 @@ package com.at.library.dto;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-import com.at.library.enums.StatusEnum;
+import com.at.library.enums.BookStatusEnum;
 
 public class BookDTO extends DTO {
 
@@ -18,7 +18,7 @@ public class BookDTO extends DTO {
 	private String author;
 	
 	@Enumerated(EnumType.STRING)
-	private StatusEnum status;
+	private BookStatusEnum status;
 
 	public Integer getId() {
 		return id;
@@ -52,11 +52,11 @@ public class BookDTO extends DTO {
 		this.author = author;
 	}
 	
-		public StatusEnum getStatus() {
+		public BookStatusEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusEnum status) {
+	public void setStatus(BookStatusEnum status) {
 		this.status = status;
 	}
 

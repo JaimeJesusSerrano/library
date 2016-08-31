@@ -1,7 +1,6 @@
 package com.at.library.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,10 +8,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import com.at.library.enums.StatusEnum;
+import com.at.library.enums.BookStatusEnum;
 
 @Entity
 public class Book implements Serializable {
@@ -30,10 +27,7 @@ public class Book implements Serializable {
 	private String author;
 
 	@Enumerated(EnumType.STRING)
-	private StatusEnum status;
-
-	@Temporal(TemporalType.DATE)
-	private Date startDate;
+	private BookStatusEnum status;
 	
 	@OneToOne(optional = true)
 	private Bookshelf bookshelf;
@@ -70,20 +64,12 @@ public class Book implements Serializable {
 		this.author = author;
 	}
 
-	public StatusEnum getStatus() {
+	public BookStatusEnum getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusEnum status) {
+	public void setStatus(BookStatusEnum status) {
 		this.status = status;
-	}
-
-	public Date getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
 	}
 
 	public Bookshelf getBookshelf() {

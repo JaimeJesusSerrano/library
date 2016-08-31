@@ -1,78 +1,76 @@
-package com.at.library.service.client;
+package com.at.library.service.user;
 
 import java.util.Map;
 import java.util.Set;
 
-import com.at.library.dto.BookDTO;
-import com.at.library.dto.ClientDTO;
-import com.at.library.model.Book;
-import com.at.library.model.Client;
+import com.at.library.dto.UserDTO;
+import com.at.library.model.User;
 
-public interface ClientService {
+public interface UserService {
 
 	/**
-	 * Get all clients of the system
+	 * Get all users of the system
 	 * 
-	 * @return set of clients
+	 * @return set of users
 	 */
-	public Set<ClientDTO> findAll(Map<String,String> requestParams);
+	public Set<UserDTO> findAll(Map<String,String> requestParams);
 	
 	/**
-	 * Transform client to clientDTO
+	 * Transform user to userDTO
 	 * 
-	 * @param client
-	 * @return clientDTO
+	 * @param user
+	 * @return userDTO
 	 */
-	public ClientDTO transform(Client client);
+	public UserDTO transform(User user);
 
 	/**
-	 * Transform clientDTO to client
+	 * Transform userDTO to user
 	 * 
-	 * @param clientDTO
-	 * @return client
+	 * @param userDTO
+	 * @return user
 	 */
-	public Client transform(ClientDTO clientDTO);
+	public User transform(UserDTO userDTO);
 	
 	/**
-	 * Find client by id
-	 * 
-	 * @param id
-	 * @return clientDTO
-	 */
-	public ClientDTO findById(Integer id);
-	
-	/**
-	 * Create a client
-	 * 
-	 * @param clientDTO
-	 * @return clientDTO created
-	 */
-	public ClientDTO create(ClientDTO clientDTO);
-	
-	/**
-	 * Get clientDTO by id
+	 * Find user by id
 	 * 
 	 * @param id
-	 * @return ClientDTO
+	 * @return userDTO
 	 */
-	public ClientDTO getClientDTOById(Integer id);
+	public UserDTO findById(Integer id);
 	
 	/**
-	 * Get client by id
+	 * Create a user
+	 * 
+	 * @param userDTO
+	 * @return userDTO created
+	 */
+	public UserDTO create(UserDTO userDTO);
+	
+	/**
+	 * Get userDTO by id
 	 * 
 	 * @param id
-	 * @return Client
+	 * @return userDTO
 	 */
-	public Client getClientById(Integer id);
+	public UserDTO getUserDTOById(Integer id);
 	
 	/**
-	 * Auto penalize clients
+	 * Get user by id
+	 * 
+	 * @param id
+	 * @return user
+	 */
+	public User getUserById(Integer id);
+	
+	/**
+	 * Auto penalize users
 	 * 
 	 */
 //	public void penalize();
 	
 	/**
-	 * Auto forgive clients
+	 * Auto forgive users
 	 * 
 	 */
 //	public void forgive();

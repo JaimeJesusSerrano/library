@@ -10,37 +10,37 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.at.library.dto.ClientDTO;
-import com.at.library.service.client.ClientService;
+import com.at.library.dto.UserDTO;
+import com.at.library.service.user.UserService;
 
 @RestController
-@RequestMapping(value = "/client")
-public class ClientController extends Controller<ClientDTO> {
+@RequestMapping(value = "/user")
+public class UserController extends Controller<UserDTO> {
 	
 	@Autowired
-	private ClientService clientService;
+	private UserService userService;
 
 	@Override
 	@RequestMapping(method = { RequestMethod.GET })
-	public Set<ClientDTO> getAll(@RequestParam(required = false) Map<String,String> requestParams) {
-		return clientService.findAll(requestParams);
+	public Set<UserDTO> getAll(@RequestParam(required = false) Map<String,String> requestParams) {
+		return userService.findAll(requestParams);
 	}
 
 	@Override
 	@RequestMapping(method = { RequestMethod.POST })
-	public ClientDTO create(@RequestBody ClientDTO clientDTO) {
-		return clientService.create(clientDTO);
+	public UserDTO create(@RequestBody UserDTO userDTO) {
+		return userService.create(userDTO);
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
-	public ClientDTO findById(Integer id) {
-		return clientService.findById(id);
+	public UserDTO findById(Integer id) {
+		return userService.findById(id);
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
-	public void update(Integer id, ClientDTO t) {
+	public void update(Integer id, UserDTO t) {
 		// TODO Auto-generated method stub
 		
 	}

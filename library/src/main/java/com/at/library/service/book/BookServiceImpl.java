@@ -1,6 +1,5 @@
 package com.at.library.service.book;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -15,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.BookDao;
 import com.at.library.dto.BookDTO;
-import com.at.library.enums.StatusEnum;
+import com.at.library.enums.BookStatusEnum;
 import com.at.library.model.Book;
 
 @Service
@@ -42,14 +41,14 @@ public class BookServiceImpl implements BookService {
 		}
 		
 		final Iterator<Book> iteratorBooks = books.iterator();
-		final Set<BookDTO> BooksDTO = new HashSet<>();
+		final Set<BookDTO> booksDTO = new HashSet<>();
 		while (iteratorBooks.hasNext()) {
 			final Book book = iteratorBooks.next();
 			final BookDTO bookDTO = transform(book);
 			log.debug(String.format("bookDTO search : %s", bookDTO));
-			BooksDTO.add(bookDTO);
+			booksDTO.add(bookDTO);
 		}
-		return BooksDTO;
+		return booksDTO;
 	}
 	
 	private Set<Book> search(Map<String,String> requestParams) {
@@ -79,8 +78,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public BookDTO create(BookDTO bookDTO) {
 		final Book book = transform(bookDTO);
-		book.setStartDate(new Date());
-		book.setStatus(StatusEnum.valueOf("ACTIVE"));
+		book.setStatus(BookStatusEnum.valueOf("OK"));
 		return transform(bookDao.save(book));
 	}
 

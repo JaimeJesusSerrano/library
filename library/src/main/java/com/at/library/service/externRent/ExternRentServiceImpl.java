@@ -1,8 +1,7 @@
 package com.at.library.service.externRent;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,12 +34,19 @@ public class ExternRentServiceImpl implements ExternRentService {
 			externRentsDTO = restTemplate.getForObject(url, ExternRentDTO[].class);
 			page++;
 			
+			List<Integer> bookIds = new ArrayList<>();
+			Integer bookId;
 			for (ExternRentDTO ExternRentDTO: externRentsDTO) {
-//				Have to check the coming ids and discard repeated
 				BookDTO bookDTO = ExternRentDTO.getBookDTO();
-				bookDTO.setStatus(StatusEnum.valueOf("ACTIVE"));
-				bookService.create(bookDTO);
-				log.debug(String.format("BookDTO %s", bookDTO.toString()));
+				bookId = bookDTO.getId();
+				
+				if (bookId != null && bookIds.get(bookId) == null) {
+					bookIds.add(bookId, bookId);
+					
+					bookDTO.setStatus(StatusEnum.valueOf("ACTIVE"));
+					bookService.create(bookDTO);
+					log.debug(String.format("BookDTO %s", bookDTO.toString()));
+				}
 			}
 			
 		} while (externRentsDTO.length > 0);

@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.at.library.dto.BookDTO;
 import com.at.library.dto.ExternRentDTO;
-import com.at.library.enums.StatusEnum;
+import com.at.library.enums.BookStatusEnum;
 import com.at.library.service.book.BookService;
 
 @Service
@@ -43,7 +43,7 @@ public class ExternRentServiceImpl implements ExternRentService {
 				if (bookId != null && bookIds.get(bookId) == null) {
 					bookIds.add(bookId, bookId);
 					
-					bookDTO.setStatus(StatusEnum.valueOf("ACTIVE"));
+					bookDTO.setStatus(BookStatusEnum.valueOf("ACTIVE"));
 					bookService.create(bookDTO);
 					log.debug(String.format("BookDTO %s", bookDTO.toString()));
 				}

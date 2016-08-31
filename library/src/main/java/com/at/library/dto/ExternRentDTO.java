@@ -8,7 +8,7 @@ public class ExternRentDTO extends DTO {
 	
 	private String endDate;
 	
-	private BookDTO bookDTO;
+	private BookPostDTO bookDTO;
 
 	public String getInit() {
 		return init;
@@ -26,11 +26,11 @@ public class ExternRentDTO extends DTO {
 		this.endDate = endDate;
 	}
 
-	public BookDTO getBookDTO() {
+	public BookPostDTO getBookDTO() {
 		return bookDTO;
 	}
 
-	public void setBook(BookDTO bookDTOP) {
+	public void setBook(BookPostDTO bookDTOP) {
 		this.bookDTO = bookDTOP;
 	}
 

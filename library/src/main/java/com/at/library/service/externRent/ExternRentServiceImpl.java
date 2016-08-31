@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.at.library.dto.BookDTO;
+import com.at.library.dto.BookPostDTO;
 import com.at.library.dto.ExternRentDTO;
 import com.at.library.enums.BookStatusEnum;
 import com.at.library.service.book.BookService;
@@ -37,15 +37,15 @@ public class ExternRentServiceImpl implements ExternRentService {
 			List<Integer> bookIds = new ArrayList<>();
 			Integer bookId;
 			for (ExternRentDTO ExternRentDTO: externRentsDTO) {
-				BookDTO bookDTO = ExternRentDTO.getBookDTO();
-				bookId = bookDTO.getId();
+				BookPostDTO bookPostDTO = ExternRentDTO.getBookDTO();
+//				bookId = bookPostDTO.getId();
+				bookId = 4;
 				
 				if (bookId != null && bookIds.get(bookId) == null) {
 					bookIds.add(bookId, bookId);
 					
-					bookDTO.setStatus(BookStatusEnum.valueOf("ACTIVE"));
-					bookService.create(bookDTO);
-					log.debug(String.format("BookDTO %s", bookDTO.toString()));
+					bookService.create(bookPostDTO);
+					log.debug(String.format("BookDTO %s", bookPostDTO.toString()));
 				}
 			}
 			

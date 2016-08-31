@@ -28,7 +28,7 @@ public class Rent implements Serializable {
 	private Employee employee;
 	
 	@OneToOne
-	private Client client;
+	private User user;
 	
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
@@ -64,12 +64,12 @@ public class Rent implements Serializable {
 		this.employee = employee;
 	}
 
-	public Client getClient() {
-		return client;
+	public User getUser() {
+		return user;
 	}
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public Date getEndDate() {

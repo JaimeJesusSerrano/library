@@ -15,10 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.at.library.dao.RentDao;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.model.Book;
-import com.at.library.model.Client;
+import com.at.library.model.User;
 import com.at.library.model.Rent;
 import com.at.library.service.book.BookService;
-import com.at.library.service.client.ClientService;
+import com.at.library.service.user.UserService;
 
 @Service
 public class RentServiceImpl implements RentService {
@@ -32,7 +32,7 @@ public class RentServiceImpl implements RentService {
 	private BookService bookService;
 	
 	@Autowired
-	private ClientService clientService;
+	private UserService userService;
 	
 	@Autowired
 	private DozerBeanMapper dozer;
@@ -56,7 +56,7 @@ public class RentServiceImpl implements RentService {
 //		return dozer.map(rent, RentPostDTO.class);
 		RentPostDTO rentPostDTO = new RentPostDTO();
 		rentPostDTO.setIdBook(rent.getBook().getId());
-		rentPostDTO.setIdClient(rent.getClient().getId());
+		rentPostDTO.setIdUser(rent.getUser().getId());
 		
 		return rentPostDTO;
 	}
@@ -65,11 +65,11 @@ public class RentServiceImpl implements RentService {
 	public Rent transform(RentPostDTO rentPostDTO) {
 //		return dozer.map(rentPostDTO, Rent.class);	
 		final Book book = bookService.getBookById(rentPostDTO.getIdBook());
-		final Client client = clientService.getClientById(rentPostDTO.getIdClient());
+		final User user = userService.getUserById(rentPostDTO.getIdUser());
 		
 		Rent rent = new Rent();
 		rent.setBook(book);
-		rent.setClient(client);
+		rent.setUser(user);
 		
 		return rent;
 	}

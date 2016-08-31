@@ -13,7 +13,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User implements Serializable {
+public class Person implements Serializable {
 
 	private static final long serialVersionUID = 8037196272531770185L;
 
@@ -22,8 +22,6 @@ public class User implements Serializable {
 	private Integer id;
 	
 	private String name;
-	
-	private String surname;
 	
 	private String dni;
 	
@@ -44,14 +42,6 @@ public class User implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-	
-	public String getSurname() {
-		return surname;
-	}
-
-	public void setSurname(String surname) {
-		this.surname = surname;
 	}
 
 	public String getDni() {

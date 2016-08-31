@@ -6,7 +6,7 @@ public class RentPostDTO extends DTO {
 
 	private Integer idBook;
 	
-	private Integer idClient;
+	private Integer idUser;
 
 	public Integer getIdBook() {
 		return idBook;
@@ -16,17 +16,17 @@ public class RentPostDTO extends DTO {
 		this.idBook = idBook;
 	}
 
-	public Integer getIdClient() {
-		return idClient;
+	public Integer getIdUser() {
+		return idUser;
 	}
 
-	public void setIdClient(Integer idClient) {
-		this.idClient = idClient;
+	public void setIdUser(Integer idUser) {
+		this.idUser = idUser;
 	}
 
 	@Override
 	public String toString() {
-		return "RentPostDTO [idLibro=" + idBook + ", idClient=" + idClient + "]";
+		return "RentPostDTO [idBook=" + idBook + ", idUser=" + idUser + "]";
 	}
-	
+
 }

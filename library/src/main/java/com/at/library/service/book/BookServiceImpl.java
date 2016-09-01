@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.dozer.DozerBeanMapper;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 import com.at.library.dao.BookDao;
 import com.at.library.dto.BookGetDTO;
 import com.at.library.dto.BookPostDTO;
-import com.at.library.dto.ExternRentDTO;
 import com.at.library.enums.BookStatusEnum;
 import com.at.library.model.Book;
 
@@ -122,11 +122,28 @@ public class BookServiceImpl implements BookService {
 	}
 	
 	private BookGetDTO getAndSetExternalExtraData(BookGetDTO bookGetDTO) {
-//		https://www.googleapis.com/books/v1/volumes?q=
-		final String url = "https://www.googleapis.com/books/v1/volumes?q="+ bookGetDTO.getTitle();
-//		GoogleBookDTO googleBookDTO = new RestTemplate().getForObject(url, BookGetDTO.class);
-//		externRentsDTO = restTemplate.getForObject(url, ExternRentDTO[].class);
+//		final String url = "https://www.googleapis.com/books/v1/volumes?maxResults=1&q="+ bookGetDTO.getTitle();
+//		GoogleBooksDTO googleBookDTO = new RestTemplate().getForObject(url, GoogleBooksDTO.class); //string
+
 		
+		
+		final String url = "https://www.googleapis.com/books/v1/volumes?maxResults=1&q="+ bookGetDTO.getTitle();
+		String externalStringJSON = new RestTemplate().getForObject(url, String.class);	
+		JSONObject externalJsonObject  = new JSONObject(externalStringJSON);
+
+//		JSONPObject jsonObject = new JSONPObject(externalJSON, Object.class);
+//		Object json = jsonObject.getValue();
+		
+//		JSONPObject jsonObject = new JSONPObject();
+//		getJSONArray
+
+
+		log.debug(String.format("url : %s", url));
+		log.debug(String.format("jsonObject : %s", externalJsonObject));
+//		log.debug(String.format("getSerializationType : %s", jsonObject.getValue()));
+//		log.debug(String.format("googleBooksDTO : %s", googleBookDTO.getItems()));
+		
+//		Integer year = externalJsonObject.getJSONObject("items").getJSONArray
 //		bookGetDTO.setYear(year);
 //		bookGetDTO.setImage(image);
 //		bookGetDTO.setDescription(description);

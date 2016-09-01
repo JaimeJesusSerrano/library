@@ -14,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.RentDao;
 import com.at.library.dto.RentPostDTO;
+import com.at.library.enums.RentStatusEnum;
 import com.at.library.model.Book;
 import com.at.library.model.User;
 import com.at.library.model.Rent;
+import com.at.library.model.RentPK;
 import com.at.library.service.book.BookService;
 import com.at.library.service.user.UserService;
 
@@ -53,25 +55,12 @@ public class RentServiceImpl implements RentService {
 
 	@Override
 	public RentPostDTO transform(Rent rent) {
-//		return dozer.map(rent, RentPostDTO.class);
-		RentPostDTO rentPostDTO = new RentPostDTO();
-		rentPostDTO.setIdBook(rent.getBook().getId());
-		rentPostDTO.setIdUser(rent.getUser().getId());
-		
-		return rentPostDTO;
+		return dozer.map(rent, RentPostDTO.class);
 	}
 
 	@Override
 	public Rent transform(RentPostDTO rentPostDTO) {
-//		return dozer.map(rentPostDTO, Rent.class);	
-		final Book book = bookService.getBookById(rentPostDTO.getIdBook());
-		final User user = userService.getUserById(rentPostDTO.getIdUser());
-		
-		Rent rent = new Rent();
-		rent.setBook(book);
-		rent.setUser(user);
-		
-		return rent;
+		return dozer.map(rentPostDTO, Rent.class);	
 	}
 
 	@Override
@@ -83,10 +72,25 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public RentPostDTO create(RentPostDTO rentPostDTO) {
 		
-		Rent rent = transform(rentPostDTO);
-		rent.setInitDate(new Date());
+		final Book book = bookService.getBookById(rentPostDTO.getIdBook());
+		final User user = userService.getUserById(rentPostDTO.getIdUser());
 		
-		return transform(rentDao.save(rent));
+		RentPK rentPK = new RentPK();
+		rentPK.setBook(book);
+		rentPK.setInitDate(new Date());
+		
+		Rent rent = new Rent();
+		rent.setRentPK(rentPK);
+		rent.setUser(user);
+		rent.setEndDate(new Date());
+		rent.setStatus(RentStatusEnum.ACTIVE);
+		rentDao.save(rent);
+		
+		RentPostDTO newRentPostDTO = new RentPostDTO();
+		newRentPostDTO.setIdBook(rent.getBook().getId());
+		newRentPostDTO.setIdUser(rent.getUser().getId());
+		
+		return newRentPostDTO;
 	}
 
 	@Override

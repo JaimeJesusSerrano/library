@@ -87,5 +87,13 @@ public class Rent implements Serializable {
 	public void setStatus(RentStatusEnum status) {
 		this.status = status;
 	}
+
+	public RentPK getRentPK() {
+		return rentPK;
+	}
+
+	public void setRentPK(RentPK rentPK) {
+		this.rentPK = rentPK;
+	}
 	
 }

@@ -12,6 +12,8 @@ public class BookGetDTO extends DTO {
 
 	private String author;
 	
+	private String status;
+	
 	private Integer year;
 	
 	private String image;
@@ -57,6 +59,15 @@ public class BookGetDTO extends DTO {
 	public void setYear(Integer year) {
 		this.year = year;
 	}
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public String getImage() {
 		return image;
@@ -76,8 +87,8 @@ public class BookGetDTO extends DTO {
 
 	@Override
 	public String toString() {
-		return "BookGetDTO [id=" + id + ", isbn=" + isbn + ", title=" + title + ", author=" + author + ", year=" + year
-				+ ", image=" + image + ", description=" + description + "]";
+		return "BookGetDTO [id=" + id + ", isbn=" + isbn + ", title=" + title + ", author=" + author + ", status="
+				+ status + ", year=" + year + ", image=" + image + ", description=" + description + "]";
 	}
 	
 }

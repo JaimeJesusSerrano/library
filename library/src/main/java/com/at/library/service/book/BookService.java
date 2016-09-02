@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.at.library.dto.BookGetDTO;
 import com.at.library.dto.BookPostDTO;
+import com.at.library.dto.HistoryRentedDTO;
 import com.at.library.model.Book;
 
 public interface BookService {
@@ -52,9 +53,10 @@ public interface BookService {
 	/**
 	 * Update a book
 	 * 
-	 * @param bookDTO
+	 * @param bookId
+	 * @param BookPostDTO
 	 */
-	public void update(BookPostDTO bookDTO);
+	public void update(Integer bookId, BookPostDTO bookPostDTO);
 	
 	/**
 	 * Delete a book that never has been rented
@@ -86,5 +88,13 @@ public interface BookService {
 	 * @return Book
 	 */
 	public Book getBookById(Integer id);
+	
+	/**
+	 * Get history rented of book
+	 * 
+	 * @param id
+	 * @return Set<HistoryRentedDTO>
+	 */
+	public Set<HistoryRentedDTO> getHistoryRented(Integer bookId);
 	
 }

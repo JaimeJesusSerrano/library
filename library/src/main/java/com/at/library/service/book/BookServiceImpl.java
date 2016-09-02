@@ -17,8 +17,10 @@ import org.springframework.web.client.RestTemplate;
 import com.at.library.dao.BookDao;
 import com.at.library.dto.BookGetDTO;
 import com.at.library.dto.BookPostDTO;
+import com.at.library.dto.HistoryRentedDTO;
 import com.at.library.enums.BookStatusEnum;
 import com.at.library.model.Book;
+import com.at.library.model.Rent;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -89,10 +91,18 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void update(BookPostDTO bookDTO) {
+	public void update(Integer bookId, BookPostDTO bookPostDTO) {
 //		We need added exception to verify the options
-		final Book book = transform(bookDTO);
-		transform(bookDao.save(book));
+		if (bookPostDTO.getId() != null && bookId == bookPostDTO.getId()) {
+			final Book book = bookDao.findOne(bookId);
+			if (bookPostDTO.getAuthor() != null) {book.setAuthor(bookPostDTO.getAuthor());}
+			if (bookPostDTO.getIsbn() != null) {book.setIsbn(bookPostDTO.getIsbn());}
+			if (bookPostDTO.getTitle() != null) {book.setAuthor(bookPostDTO.getTitle());}
+			transform(bookDao.save(book));
+		}
+		else {
+//			Exception to to id is not equal 
+		}
 	}
 
 	@Override
@@ -141,6 +151,27 @@ public class BookServiceImpl implements BookService {
 		bookGetDTO.setDescription(description);
 		
 		return bookGetDTO;
+	}
+
+	@Override
+	public Set<HistoryRentedDTO> getHistoryRented(Integer bookId) {
+		final Book book = bookDao.findOne(bookId);
+		final Set<Rent> rents = bookDao.getRentsOfBook(book);
+		
+		
+		final Iterator<Rent> iteratorRents = rents.iterator();
+		final Set<HistoryRentedDTO> historiesRentedDTO = new HashSet<>();
+		while (iteratorRents.hasNext()) {
+			final Rent rent = iteratorRents.next();
+			final HistoryRentedDTO historyRentedDTO = new HistoryRentedDTO();
+			historyRentedDTO.setIdBook(rent.getBook().getId());
+			historyRentedDTO.setInit(rent.getInitDate());
+			historyRentedDTO.setTitle(rent.getBook().getTitle());
+			historyRentedDTO.setEnd(rent.getEndDate());
+			historiesRentedDTO.add(historyRentedDTO);
+		}
+		 
+		return historiesRentedDTO;
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.at.library.model.Book;
+import com.at.library.model.Rent;
 
 @Repository
 public interface BookDao extends CrudRepository<Book, Integer> {
@@ -22,4 +23,6 @@ public interface BookDao extends CrudRepository<Book, Integer> {
 	@Query(value = "SELECT COUNT(rent) FROM Rent AS rent WHERE rent.rentPK.book = :book")
 	public Integer hasBeenUsed(@Param("book") Book book);
 	
+	@Query(value = "SELECT rent FROM Rent AS rent WHERE rent.rentPK.book = :book")
+	public Set<Rent> getRentsOfBook(@Param("book") Book book);
 }

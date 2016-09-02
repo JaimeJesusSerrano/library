@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookGetDTO;
 import com.at.library.dto.BookPostDTO;
+import com.at.library.dto.HistoryRentedDTO;
 import com.at.library.service.book.BookService;
 
 @RestController
@@ -28,33 +29,32 @@ public class BookController {
 
 	@RequestMapping(method = { RequestMethod.GET })
 	public Set<BookGetDTO> getAll(@RequestParam(required = false) Map<String,String> requestParams) {
-		log.debug(String.format("The aditional parameters is %s", requestParams.toString()));
-		log.debug(String.format("Getting all books"));
 		return bookservice.findAll(requestParams);
 	}
 
 	@RequestMapping(method = { RequestMethod.POST })
 	public BookGetDTO create(@RequestBody BookPostDTO bookPostDTO) {
-		log.debug(String.format("Create the book %s", bookPostDTO));
 		return bookservice.create(bookPostDTO);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
 	public BookGetDTO findById(@PathVariable("id") Integer id) {
-		log.debug(String.format("Getting a book with id %s", id));
 		return bookservice.findById(id);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
-	public void update(@PathVariable("id") Integer id, @RequestBody BookPostDTO bookDTO) {
-		log.debug(String.format("Update a book with id %s", id));
-		bookservice.update(bookDTO);
+	public void update(@PathVariable("id") Integer bookId, @RequestBody BookPostDTO bookPostDTO) {
+		bookservice.update(bookId, bookPostDTO);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
 	public void delete(@PathVariable("id") Integer id) {
-		log.debug(String.format("Delete book with id %s", id));
 		bookservice.delete(id);
+	}
+	
+	@RequestMapping(value = "/{id}/rent", method = { RequestMethod.GET })
+	public Set<HistoryRentedDTO> getHistoryRented(@PathVariable("id") Integer bookId) {
+		return bookservice.getHistoryRented(bookId);
 	}
 
 }

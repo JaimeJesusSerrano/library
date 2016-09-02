@@ -91,6 +91,7 @@ public class UserServiceImpl implements UserService {
 	public UserDTO create(UserDTO userDTO) {
 		final User user = transform(userDTO);
 		user.setRegistrationDate(new Date());
+		user.setStatus(UserStatusEnum.ENABLE);
 		return transform(userDao.save(user));
 	}
 
@@ -107,6 +108,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delete(Integer id) {
 		final User user = userDao.findOne(id);
+//		if (user == null) throw new UserNotFoundException(id);
 		user.setStatus(UserStatusEnum.DISABLE);
 		userDao.save(user);
 	}

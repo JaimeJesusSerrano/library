@@ -44,22 +44,21 @@ public class BookServiceImpl implements BookService {
 		}
 		
 		final Iterator<Book> iteratorBooks = books.iterator();
-		final Set<BookGetDTO> booksDTO = new HashSet<>();
+		final Set<BookGetDTO> booksGetDTO = new HashSet<>();
 		while (iteratorBooks.hasNext()) {
 			final Book book = iteratorBooks.next();
-			final BookGetDTO bookDTO = transform(book);
-			log.debug(String.format("bookDTO search : %s", bookDTO));
-			booksDTO.add(bookDTO);
+			final BookGetDTO bookGetDTO = transform(book);
+			getAndSetExternalExtraData(bookGetDTO);
+			booksGetDTO.add(bookGetDTO);
 		}
-		return booksDTO;
+		return booksGetDTO;
 	}
 	
 	private Set<Book> search(Map<String,String> requestParams) {
 		String isbn = requestParams.get("isbn");
 		String title = requestParams.get("title");
-		String author = requestParams.get("author");
 		
-		return bookDao.search(isbn, title, author);
+		return bookDao.search(isbn, title);
 	}
 
 	@Override
@@ -75,7 +74,8 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public BookGetDTO findById(Integer id) {
 		final Book book = bookDao.findOne(id);
-		return transform(book);
+		BookGetDTO bookGetDTO = transform(book);
+		return getAndSetExternalExtraData(bookGetDTO);
 	}
 
 	@Override

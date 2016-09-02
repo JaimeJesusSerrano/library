@@ -18,18 +18,18 @@ public interface BookService {
 	public Set<BookGetDTO> findAll(Map<String,String> requestParams);
 
 	/**
-	 * Transform book to bookPostDTO
+	 * Transform Book to BookGetDTO
 	 * 
-	 * @param book
-	 * @return bookPostDTO
+	 * @param Book
+	 * @return BookGetDTO
 	 */
 	public BookGetDTO transform(Book book);
 
 	/**
-	 * Transform bookPostDTO to book
+	 * Transform BookPostDTO to Book
 	 * 
-	 * @param bookPostDTO
-	 * @return book
+	 * @param BookPostDTO
+	 * @return Book
 	 */
 	public Book transform(BookPostDTO bookPostDTO);
 	

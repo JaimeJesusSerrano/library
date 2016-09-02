@@ -64,14 +64,21 @@ public interface UserService {
 	public User getUserById(Integer id);
 	
 	/**
+	 * Change user status to disable
+	 * 
+	 * @param id
+	 */
+	public void delete(Integer id);
+	
+	/**
 	 * Auto penalize users
 	 * 
 	 */
-//	public void penalize();
+	public void penalize();
 	
 	/**
 	 * Auto forgive users
 	 * 
 	 */
-//	public void forgive();
+	public void forgive();
 }

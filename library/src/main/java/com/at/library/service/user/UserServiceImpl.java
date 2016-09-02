@@ -10,11 +10,13 @@ import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.UserDao;
 import com.at.library.dto.UserDTO;
+import com.at.library.enums.UserStatusEnum;
 import com.at.library.model.User;
 
 @Service
@@ -28,17 +30,17 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private DozerBeanMapper dozer;
 	
-//	@Override
-//	@Scheduled(cron = "0 0 0/4 1/1 * ? *")
-//	public void penalize() {
-//		log.debug("Time starts to penalize users");
-//	}
-//	
-//	@Override
-//	@Scheduled(cron = "0 0 0/4 1/1 * ? *")
-//	public void forgive() {
-//		log.debug("Time starts to forgive users");
-//	}
+	@Override
+	@Scheduled(cron = "0 0 0/4 1/1 * ?")
+	public void penalize() {
+		log.debug("Time starts to penalize users");
+	}
+	
+	@Override
+	@Scheduled(cron = "0 0 0/4 1/1 * ?")
+	public void forgive() {
+		log.debug("Time starts to forgive users");
+	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -100,6 +102,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserById(Integer id) {
 		return userDao.findOne(id);
+	}
+
+	@Override
+	public void delete(Integer id) {
+		final User user = userDao.findOne(id);
+		user.setStatus(UserStatusEnum.DISABLE);
+		userDao.save(user);
 	}
 
 }

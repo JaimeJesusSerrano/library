@@ -51,6 +51,13 @@ public interface RentService {
 	 * 
 	 * @param RentPostDTO
 	 */
-	public void update (RentPostDTO rentPostDTO);
+	public void update(RentPostDTO rentPostDTO);
+	
+	/**
+	 * Change rent status to COMPLETED
+	 * 
+	 * @param id
+	 */
+	public void delete(Integer idLibro);
 	
 }

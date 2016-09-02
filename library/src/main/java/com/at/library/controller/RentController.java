@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,14 +42,13 @@ public class RentController extends Controller<RentPostDTO> {
 	@Override
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
 	public void update(Integer id, RentPostDTO rentPostDTO) {
-		rentService.update(rentPostDTO);
+//		rentService.update(rentPostDTO);
 	}
 
 	@Override
-	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
-	public void delete(Integer id) {
-		// TODO Auto-generated method stub
-		
+	@RequestMapping(value = "/{idLibro}", method = { RequestMethod.DELETE })
+	public void delete(@PathVariable("idLibro") Integer idLibro) {
+		rentService.delete(idLibro);
 	}
 
 }

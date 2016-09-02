@@ -72,6 +72,7 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public RentPostDTO create(RentPostDTO rentPostDTO) {
 		
+		//si libro y user existen
 		final Book book = bookService.getBookById(rentPostDTO.getIdBook());
 		final User user = userService.getUserById(rentPostDTO.getIdUser());
 		
@@ -96,6 +97,14 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public void update(RentPostDTO rentPostDTO) {
 		final Rent rent = transform(rentPostDTO);
+		rentDao.save(rent);
+	}
+
+	@Override
+	public void delete(Integer idLibro) {
+		final Book book = bookService.getBookById(idLibro);
+		final Rent rent = rentDao.getRentOfBook(book);
+		rent.setStatus(RentStatusEnum.COMPLETED);
 		rentDao.save(rent);
 	}
 	

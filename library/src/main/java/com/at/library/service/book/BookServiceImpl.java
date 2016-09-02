@@ -122,31 +122,23 @@ public class BookServiceImpl implements BookService {
 	}
 	
 	private BookGetDTO getAndSetExternalExtraData(BookGetDTO bookGetDTO) {
-//		final String url = "https://www.googleapis.com/books/v1/volumes?maxResults=1&q="+ bookGetDTO.getTitle();
-//		GoogleBooksDTO googleBookDTO = new RestTemplate().getForObject(url, GoogleBooksDTO.class); //string
-
-		
-		
 		final String url = "https://www.googleapis.com/books/v1/volumes?maxResults=1&q="+ bookGetDTO.getTitle();
 		String externalStringJSON = new RestTemplate().getForObject(url, String.class);	
-		JSONObject externalJsonObject  = new JSONObject(externalStringJSON);
+		JSONObject externalJsonObjects  = new JSONObject(externalStringJSON);
+		JSONObject externalJsonObject = externalJsonObjects.getJSONArray("items").getJSONObject(0);
 
-//		JSONPObject jsonObject = new JSONPObject(externalJSON, Object.class);
-//		Object json = jsonObject.getValue();
+		String description = externalJsonObject.getJSONObject("volumeInfo").getString("description");
+		String image = externalJsonObject.getJSONObject("volumeInfo").getJSONObject("imageLinks").getString("thumbnail");
+		String year = externalJsonObject.getJSONObject("volumeInfo").getString("publishedDate");
 		
-//		JSONPObject jsonObject = new JSONPObject();
-//		getJSONArray
+		if (year.contains("-")) {
+			String segments[] = year.split("-");
+			year = segments[0];
+		}
 
-
-		log.debug(String.format("url : %s", url));
-		log.debug(String.format("jsonObject : %s", externalJsonObject));
-//		log.debug(String.format("getSerializationType : %s", jsonObject.getValue()));
-//		log.debug(String.format("googleBooksDTO : %s", googleBookDTO.getItems()));
-		
-//		Integer year = externalJsonObject.getJSONObject("items").getJSONArray
-//		bookGetDTO.setYear(year);
-//		bookGetDTO.setImage(image);
-//		bookGetDTO.setDescription(description);
+		bookGetDTO.setYear(Integer.parseInt(year));
+		bookGetDTO.setImage(image);
+		bookGetDTO.setDescription(description);
 		
 		return bookGetDTO;
 	}

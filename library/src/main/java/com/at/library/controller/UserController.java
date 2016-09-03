@@ -32,7 +32,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
-	public UserDTO findById(Integer id) {
+	public UserDTO findById(@PathVariable("id") Integer id) {
 		return userService.findById(id);
 	}
 

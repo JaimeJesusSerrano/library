@@ -13,11 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.at.exceptions.BookNotFoundException;
 import com.at.exceptions.BookRentedException;
 import com.at.exceptions.RentNotFoundException;
+import com.at.exceptions.UserIsDisableException;
 import com.at.exceptions.UserNotFoundException;
 import com.at.library.dao.RentDao;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.enums.BookStatusEnum;
 import com.at.library.enums.RentStatusEnum;
+import com.at.library.enums.UserStatusEnum;
 import com.at.library.model.Book;
 import com.at.library.model.Rent;
 import com.at.library.model.RentPK;
@@ -86,6 +88,7 @@ public class RentServiceImpl implements RentService {
 		
 		final User user = userService.getUserById(rentPostDTO.getIdUser());
 		if (user == null) throw new UserNotFoundException();
+		if (user.getStatus() == UserStatusEnum.DISABLE) throw new UserIsDisableException();
 		
 		RentPK rentPK = new RentPK();
 		rentPK.setBook(book);

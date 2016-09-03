@@ -30,7 +30,7 @@ public class Rent implements Serializable {
 	@OneToOne
 	private User user;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
 	
 	@Enumerated(EnumType.STRING)

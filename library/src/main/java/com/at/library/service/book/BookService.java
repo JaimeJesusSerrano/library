@@ -59,6 +59,13 @@ public interface BookService {
 	public void update(Integer bookId, BookPostDTO bookPostDTO) throws Exception;
 	
 	/**
+	 * Update a book
+	 * 
+	 * @param Book
+	 */
+	public void update(Book book) throws Exception;
+	
+	/**
 	 * Delete a book that never has been rented
 	 * 
 	 * @param id

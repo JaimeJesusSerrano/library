@@ -6,26 +6,29 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.dozer.DozerBeanMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.at.exceptions.BookNotFoundException;
+import com.at.exceptions.BookRentedException;
+import com.at.exceptions.RentNotFoundException;
+import com.at.exceptions.UserNotFoundException;
 import com.at.library.dao.RentDao;
 import com.at.library.dto.RentPostDTO;
+import com.at.library.enums.BookStatusEnum;
 import com.at.library.enums.RentStatusEnum;
 import com.at.library.model.Book;
-import com.at.library.model.User;
 import com.at.library.model.Rent;
 import com.at.library.model.RentPK;
+import com.at.library.model.User;
 import com.at.library.service.book.BookService;
 import com.at.library.service.user.UserService;
 
 @Service
 public class RentServiceImpl implements RentService {
 	
-	private static final Logger log = LoggerFactory.getLogger(RentServiceImpl.class);
+//	private static final Logger log = LoggerFactory.getLogger(RentServiceImpl.class);
 	
 	@Autowired
 	private RentDao rentDao;
@@ -47,7 +50,9 @@ public class RentServiceImpl implements RentService {
 		final Set<RentPostDTO> rentsPostDTO = new HashSet<>();
 		while(iteratorRents.hasNext()) {
 			final Rent rent = iteratorRents.next();
-			final RentPostDTO rentPostDTO = transform(rent);
+			final RentPostDTO rentPostDTO = new RentPostDTO();
+			rentPostDTO.setIdBook(rent.getBook().getId());
+			rentPostDTO.setIdUser(rent.getUser().getId());
 			rentsPostDTO.add(rentPostDTO);
 		}
 		return rentsPostDTO;
@@ -66,15 +71,21 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public RentPostDTO findById(Integer id) {
 		Rent rent = rentDao.findOne(id);
-		return transform(rent);
+		final RentPostDTO rentPostDTO = new RentPostDTO();
+		rentPostDTO.setIdBook(rent.getBook().getId());
+		rentPostDTO.setIdUser(rent.getUser().getId());
+		return rentPostDTO;
 	}
 
 	@Override
-	public RentPostDTO create(RentPostDTO rentPostDTO) {
+	public RentPostDTO create(RentPostDTO rentPostDTO) throws Exception {
 		
-		//si libro y user existen
 		final Book book = bookService.getBookById(rentPostDTO.getIdBook());
+		if (book == null) throw new BookNotFoundException();
+		if (book.getStatus() == BookStatusEnum.RENTED) throw new BookRentedException(rentPostDTO.getIdBook());
+		
 		final User user = userService.getUserById(rentPostDTO.getIdUser());
+		if (user == null) throw new UserNotFoundException();
 		
 		RentPK rentPK = new RentPK();
 		rentPK.setBook(book);
@@ -83,9 +94,11 @@ public class RentServiceImpl implements RentService {
 		Rent rent = new Rent();
 		rent.setRentPK(rentPK);
 		rent.setUser(user);
-		rent.setEndDate(new Date());
 		rent.setStatus(RentStatusEnum.ACTIVE);
 		rentDao.save(rent);
+
+		book.setStatus(BookStatusEnum.RENTED);
+		bookService.update(book);
 		
 		RentPostDTO newRentPostDTO = new RentPostDTO();
 		newRentPostDTO.setIdBook(rent.getBook().getId());
@@ -101,11 +114,19 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public void delete(Integer idLibro) {
-		final Book book = bookService.getBookById(idLibro);
+	public void delete(Integer idBook) throws Exception {
+		final Book book = bookService.getBookById(idBook);
+		if (book == null) throw new BookNotFoundException();
+		
 		final Rent rent = rentDao.getRentOfBook(book);
+		if (rent == null) throw new RentNotFoundException();
+		
 		rent.setStatus(RentStatusEnum.COMPLETED);
+		rent.setEndDate(new Date());
 		rentDao.save(rent);
+		
+		book.setStatus(BookStatusEnum.OK);
+		bookService.update(book);		
 	}
 	
 }

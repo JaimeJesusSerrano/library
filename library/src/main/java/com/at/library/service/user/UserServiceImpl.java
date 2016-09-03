@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delete(Integer id) throws Exception {
 		final User user = userDao.findOne(id);
-		if (user == null) throw new UserNotFoundException(id);
+		if (user == null) throw new UserNotFoundException();
 		user.setStatus(UserStatusEnum.DISABLE);
 		userDao.save(user);
 	}

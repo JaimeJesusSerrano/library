@@ -16,39 +16,34 @@ import com.at.library.service.rent.RentService;
 
 @RestController
 @RequestMapping(value = "/rent")
-public class RentController extends Controller<RentPostDTO> {
+public class RentController {
 
 	@Autowired
 	private RentService rentService;
 
-	@Override
 	@RequestMapping(method = { RequestMethod.GET })
 	public Set<RentPostDTO> getAll(@RequestParam(required = false) Map<String,String> requestParams) {
 		return rentService.findAll();
 	}
 
-	@Override
 	@RequestMapping(method = { RequestMethod.POST })
-	public RentPostDTO create(@RequestBody RentPostDTO rentPostDTO) {
+	public RentPostDTO create(@RequestBody RentPostDTO rentPostDTO) throws Exception {
 		return rentService.create(rentPostDTO);
 	}
 
-	@Override
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
-	public RentPostDTO findById(Integer id) {
+	public RentPostDTO findById(@PathVariable("id") Integer id) {
 		return rentService.findById(id);
 	}
 
-	@Override
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
 	public void update(Integer id, RentPostDTO rentPostDTO) {
 //		rentService.update(rentPostDTO);
 	}
 
-	@Override
-	@RequestMapping(value = "/{idLibro}", method = { RequestMethod.DELETE })
-	public void delete(@PathVariable("idLibro") Integer idLibro) {
-		rentService.delete(idLibro);
+	@RequestMapping(value = "/{idBook}", method = { RequestMethod.DELETE })
+	public void delete(@PathVariable("idBook") Integer idBook) throws Exception {
+		rentService.delete(idBook);
 	}
 
 }

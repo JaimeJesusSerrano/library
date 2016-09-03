@@ -97,7 +97,7 @@ public class BookServiceImpl implements BookService {
 		if (bookPostDTO.getId() == null || bookId != bookPostDTO.getId()) throw new IdsMismatchedException(bookId, bookPostDTO.getId());
 		
 		final Book book = bookDao.findOne(bookId);
-		if (book == null) throw new BookNotFoundException(bookId);
+		if (book == null) throw new BookNotFoundException();
 		
 		if (bookPostDTO.getAuthor() != null) {book.setAuthor(bookPostDTO.getAuthor());}
 		if (bookPostDTO.getIsbn() != null) {book.setIsbn(bookPostDTO.getIsbn());}
@@ -108,7 +108,7 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void delete(Integer id) throws Exception {
 		final Book book = bookDao.findOne(id);
-		if (book == null) throw new BookNotFoundException(id);
+		if (book == null) throw new BookNotFoundException();
 		if (numberOfTimesRented(id) == 0) {
 			bookDao.delete(id);
 		}
@@ -180,13 +180,21 @@ public class BookServiceImpl implements BookService {
 			final Rent rent = iteratorRents.next();
 			final HistoryRentedDTO historyRentedDTO = new HistoryRentedDTO();
 			historyRentedDTO.setIdBook(rent.getBook().getId());
-			historyRentedDTO.setInit(rent.getInitDate());
 			historyRentedDTO.setTitle(rent.getBook().getTitle());
+			historyRentedDTO.setInit(rent.getInitDate());
 			historyRentedDTO.setEnd(rent.getEndDate());
 			historiesRentedDTO.add(historyRentedDTO);
 		}
 		 
 		return historiesRentedDTO;
+	}
+
+	@Override
+	public void update(Book book) throws Exception {
+		final Book bookAux = bookDao.findOne(book.getId());
+		if (bookAux == null) throw new BookNotFoundException();
+		
+		bookDao.save(book);
 	}
 
 }

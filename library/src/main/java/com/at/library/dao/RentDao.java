@@ -11,7 +11,7 @@ import com.at.library.model.Rent;
 @Repository
 public interface RentDao extends CrudRepository<Rent, Integer> {
 
-	@Query(value = "SELECT rent FROM Rent AS rent WHERE rent.rentPK.book = :book")
+	@Query(value = "SELECT rent FROM Rent AS rent WHERE rent.rentPK.book = :book AND rent.status = 'ACTIVE' ")
 	public Rent getRentOfBook(@Param("book") Book book);
 	
 }

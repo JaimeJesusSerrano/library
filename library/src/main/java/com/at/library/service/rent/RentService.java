@@ -44,7 +44,7 @@ public interface RentService {
 	 * @param rentPostDTO
 	 * @return rentPostDTO created
 	 */
-	public RentPostDTO create(RentPostDTO rentPostDTO);
+	public RentPostDTO create(RentPostDTO rentPostDTO) throws Exception;
 	
 	/**
 	 * Update a rent
@@ -54,10 +54,10 @@ public interface RentService {
 	public void update(RentPostDTO rentPostDTO);
 	
 	/**
-	 * Change rent status to COMPLETED
+	 * Change rent status to COMPLETED and book status to OK
 	 * 
 	 * @param id
 	 */
-	public void delete(Integer idLibro);
+	public void delete(Integer idBook) throws Exception;
 	
 }

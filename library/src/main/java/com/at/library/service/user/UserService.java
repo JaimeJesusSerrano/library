@@ -68,7 +68,7 @@ public interface UserService {
 	 * 
 	 * @param id
 	 */
-	public void delete(Integer id);
+	public void delete(Integer id) throws Exception;
 	
 	/**
 	 * Auto penalize users

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.at.exceptions.IdNotFoundException;
 import com.at.library.dto.UserDTO;
 import com.at.library.service.user.UserService;
 
@@ -45,9 +44,6 @@ public class UserController {
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
 	public void delete(@PathVariable("id") Integer id) throws Exception {
-		if (id == 32) { //prueba a eliminar
-			throw new IdNotFoundException(); //prueba a eliminar
-		}
 		userService.delete(id);
 	}
 

@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.at.exceptions.UserNotFoundException;
 import com.at.library.dao.UserDao;
 import com.at.library.dto.UserDTO;
 import com.at.library.enums.UserStatusEnum;
@@ -106,9 +107,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void delete(Integer id) {
+	public void delete(Integer id) throws Exception {
 		final User user = userDao.findOne(id);
-//		if (user == null) throw new UserNotFoundException(id);
+		if (user == null) throw new UserNotFoundException(id);
 		user.setStatus(UserStatusEnum.DISABLE);
 		userDao.save(user);
 	}

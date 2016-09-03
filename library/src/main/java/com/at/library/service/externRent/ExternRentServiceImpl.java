@@ -22,7 +22,7 @@ public class ExternRentServiceImpl implements ExternRentService {
 	
 	private static final Logger log = LoggerFactory.getLogger(ExternRentServiceImpl.class);
 	
-	public void migrationOfBooksInExternRents() {
+	public void migrationOfBooksInExternRents() throws Exception {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		ExternRentDTO[] externRentsDTO;

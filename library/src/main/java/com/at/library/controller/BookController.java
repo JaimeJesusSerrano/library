@@ -3,8 +3,6 @@ package com.at.library.controller;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,33 +20,33 @@ import com.at.library.service.book.BookService;
 @RequestMapping(value = "/book")
 public class BookController {
 	
-	private static final Logger log = LoggerFactory.getLogger(BookController.class);
+//	private static final Logger log = LoggerFactory.getLogger(BookController.class);
 
 	@Autowired
 	private BookService bookservice;
 
 	@RequestMapping(method = { RequestMethod.GET })
-	public Set<BookGetDTO> getAll(@RequestParam(required = false) Map<String,String> requestParams) {
+	public Set<BookGetDTO> getAll(@RequestParam(required = false) Map<String,String> requestParams) throws Exception {
 		return bookservice.findAll(requestParams);
 	}
 
 	@RequestMapping(method = { RequestMethod.POST })
-	public BookGetDTO create(@RequestBody BookPostDTO bookPostDTO) {
+	public BookGetDTO create(@RequestBody BookPostDTO bookPostDTO) throws Exception {
 		return bookservice.create(bookPostDTO);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET })
-	public BookGetDTO findById(@PathVariable("id") Integer id) {
+	public BookGetDTO findById(@PathVariable("id") Integer id) throws Exception {
 		return bookservice.findById(id);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
-	public void update(@PathVariable("id") Integer bookId, @RequestBody BookPostDTO bookPostDTO) {
+	public void update(@PathVariable("id") Integer bookId, @RequestBody BookPostDTO bookPostDTO) throws Exception {
 		bookservice.update(bookId, bookPostDTO);
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })
-	public void delete(@PathVariable("id") Integer id) {
+	public void delete(@PathVariable("id") Integer id) throws Exception {
 		bookservice.delete(id);
 	}
 	

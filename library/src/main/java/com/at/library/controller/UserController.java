@@ -38,8 +38,6 @@ public class UserController {
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.PUT })
 	public void update(Integer id, UserDTO t) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@RequestMapping(value = "/{id}", method = { RequestMethod.DELETE })

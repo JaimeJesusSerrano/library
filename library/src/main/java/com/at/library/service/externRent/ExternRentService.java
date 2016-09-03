@@ -6,6 +6,6 @@ public interface ExternRentService {
 	 * Migration of book from external
 	 * 
 	 */
-	public void migrationOfBooksInExternRents();
+	public void migrationOfBooksInExternRents() throws Exception;
 	
 }

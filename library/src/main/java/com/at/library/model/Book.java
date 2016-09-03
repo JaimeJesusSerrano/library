@@ -2,6 +2,7 @@ package com.at.library.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,10 +21,13 @@ public class Book implements Serializable {
 	@GeneratedValue
 	private Integer id;
 
+	@Column(nullable = false)
 	private String isbn;
 
+	@Column(nullable = false)
 	private String title;
 
+	@Column(nullable = false)
 	private String author;
 
 	@Enumerated(EnumType.STRING)

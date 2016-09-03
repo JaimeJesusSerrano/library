@@ -7,13 +7,13 @@ import java.util.Set;
 
 import org.dozer.DozerBeanMapper;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import com.at.exceptions.BookNotFoundException;
+import com.at.exceptions.IdsMismatchedException;
 import com.at.library.dao.BookDao;
 import com.at.library.dto.BookGetDTO;
 import com.at.library.dto.BookPostDTO;
@@ -25,7 +25,7 @@ import com.at.library.model.Rent;
 @Service
 public class BookServiceImpl implements BookService {
 	
-	private static final Logger log = LoggerFactory.getLogger(BookServiceImpl.class);
+//	private static final Logger log = LoggerFactory.getLogger(BookServiceImpl.class);
 
 	@Autowired
 	private BookDao bookDao;
@@ -35,7 +35,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<BookGetDTO> findAll(Map<String,String> requestParams) {
+	public Set<BookGetDTO> findAll(Map<String,String> requestParams) throws Exception {
 		
 		final Iterable<Book> books;
 		if (requestParams.isEmpty()) {
@@ -74,43 +74,42 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public BookGetDTO findById(Integer id) {
+	public BookGetDTO findById(Integer id) throws Exception {
 		final Book book = bookDao.findOne(id);
 		BookGetDTO bookGetDTO = transform(book);
 		return getAndSetExternalExtraData(bookGetDTO);
 	}
 
 	@Override
-	public BookGetDTO create(BookPostDTO bookPostDTO) {
+	public BookGetDTO create(BookPostDTO bookPostDTO) throws Exception {
 		final Book book = transform(bookPostDTO);
 		book.setStatus(BookStatusEnum.valueOf("OK"));
-		bookDao.save(book);
 		
+		bookDao.save(book);
 		BookGetDTO bookGetDTO = transform(book);
-		return getAndSetExternalExtraData(bookGetDTO);
+		getAndSetExternalExtraData(bookGetDTO);
+		
+		return bookGetDTO;
 	}
 
 	@Override
-	public void update(Integer bookId, BookPostDTO bookPostDTO) {
-//		We need added exception to verify the options
-		if (bookPostDTO.getId() != null && bookId == bookPostDTO.getId()) {
-			final Book book = bookDao.findOne(bookId);
-			if (bookPostDTO.getAuthor() != null) {book.setAuthor(bookPostDTO.getAuthor());}
-			if (bookPostDTO.getIsbn() != null) {book.setIsbn(bookPostDTO.getIsbn());}
-			if (bookPostDTO.getTitle() != null) {book.setAuthor(bookPostDTO.getTitle());}
-			transform(bookDao.save(book));
-		}
-		else {
-//			Exception to to id is not equal 
-		}
+	public void update(Integer bookId, BookPostDTO bookPostDTO) throws Exception {
+		if (bookPostDTO.getId() == null || bookId != bookPostDTO.getId()) throw new IdsMismatchedException(bookId, bookPostDTO.getId());
+		
+		final Book book = bookDao.findOne(bookId);
+		if (book == null) throw new BookNotFoundException(bookId);
+		
+		if (bookPostDTO.getAuthor() != null) {book.setAuthor(bookPostDTO.getAuthor());}
+		if (bookPostDTO.getIsbn() != null) {book.setIsbn(bookPostDTO.getIsbn());}
+		if (bookPostDTO.getTitle() != null) {book.setAuthor(bookPostDTO.getTitle());}
+		transform(bookDao.save(book));
 	}
 
 	@Override
-	public void delete(Integer id) {
-//		We need added exception to controller to avoid not exist
-		Integer numberOfTimesRented = numberOfTimesRented(id);
-		log.debug(String.format("Number of times rented the book with id %s : %s", id, numberOfTimesRented));
-		if (numberOfTimesRented == 0) {
+	public void delete(Integer id) throws Exception {
+		final Book book = bookDao.findOne(id);
+		if (book == null) throw new BookNotFoundException(id);
+		if (numberOfTimesRented(id) == 0) {
 			bookDao.delete(id);
 		}
 	}
@@ -131,22 +130,38 @@ public class BookServiceImpl implements BookService {
 		return bookDao.findOne(id);
 	}
 	
-	private BookGetDTO getAndSetExternalExtraData(BookGetDTO bookGetDTO) {
+	private BookGetDTO getAndSetExternalExtraData(BookGetDTO bookGetDTO) throws Exception {
 		final String url = "https://www.googleapis.com/books/v1/volumes?maxResults=1&q="+ bookGetDTO.getTitle();
 		String externalStringJSON = new RestTemplate().getForObject(url, String.class);	
 		JSONObject externalJsonObjects  = new JSONObject(externalStringJSON);
-		JSONObject externalJsonObject = externalJsonObjects.getJSONArray("items").getJSONObject(0);
-
-		String description = externalJsonObject.getJSONObject("volumeInfo").getString("description");
-		String image = externalJsonObject.getJSONObject("volumeInfo").getJSONObject("imageLinks").getString("thumbnail");
-		String year = externalJsonObject.getJSONObject("volumeInfo").getString("publishedDate");
 		
-		if (year.contains("-")) {
-			String segments[] = year.split("-");
-			year = segments[0];
+		String description = "";
+		String image = "";
+		String year = "";
+		
+		if (externalJsonObjects.getInt("totalItems") != 0) {
+			JSONObject externalJsonObject = externalJsonObjects.getJSONArray("items").getJSONObject(0);
+			
+			if (externalJsonObject.getJSONObject("volumeInfo").has("description")) {
+				description = externalJsonObject.getJSONObject("volumeInfo").getString("description");
+			}
+			
+			if (externalJsonObject.getJSONObject("volumeInfo").getJSONObject("imageLinks").has("thumbnail")) {
+				image = externalJsonObject.getJSONObject("volumeInfo").getJSONObject("imageLinks").getString("thumbnail");
+			}
+			
+			if (externalJsonObject.getJSONObject("volumeInfo").has("publishedDate")) {
+				year = externalJsonObject.getJSONObject("volumeInfo").getString("publishedDate");
+			}
+			
+			if (year.contains("-")) {
+				String segments[] = year.split("-");
+				year = segments[0];
+			}
+			
+			bookGetDTO.setYear(Integer.parseInt(year));
 		}
 
-		bookGetDTO.setYear(Integer.parseInt(year));
 		bookGetDTO.setImage(image);
 		bookGetDTO.setDescription(description);
 		

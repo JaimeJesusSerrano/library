@@ -16,7 +16,7 @@ public interface BookService {
 	 * @param optionals requestParams to search
 	 * @return set of books
 	 */
-	public Set<BookGetDTO> findAll(Map<String,String> requestParams);
+	public Set<BookGetDTO> findAll(Map<String,String> requestParams) throws Exception;
 
 	/**
 	 * Transform Book to BookGetDTO
@@ -40,7 +40,7 @@ public interface BookService {
 	 * @param id
 	 * @return bookDTO
 	 */
-	public BookGetDTO findById(Integer id);
+	public BookGetDTO findById(Integer id) throws Exception;
 	
 	/**
 	 * Create a book
@@ -48,7 +48,7 @@ public interface BookService {
 	 * @param bookDTO
 	 * @return bookDTO created
 	 */
-	public BookGetDTO create(BookPostDTO bookPostDTO);
+	public BookGetDTO create(BookPostDTO bookPostDTO) throws Exception;
 	
 	/**
 	 * Update a book
@@ -56,14 +56,14 @@ public interface BookService {
 	 * @param bookId
 	 * @param BookPostDTO
 	 */
-	public void update(Integer bookId, BookPostDTO bookPostDTO);
+	public void update(Integer bookId, BookPostDTO bookPostDTO) throws Exception;
 	
 	/**
 	 * Delete a book that never has been rented
 	 * 
 	 * @param id
 	 */
-	public void delete(Integer id);
+	public void delete(Integer id) throws Exception;
 	
 	/**
 	 * Number of times that a book has been rented

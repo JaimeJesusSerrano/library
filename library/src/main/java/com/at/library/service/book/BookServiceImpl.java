@@ -8,6 +8,9 @@ import java.util.Set;
 import org.dozer.DozerBeanMapper;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -37,13 +40,22 @@ public class BookServiceImpl implements BookService {
 	@Transactional(readOnly = true)
 	public Set<BookGetDTO> findAll(Map<String,String> requestParams) throws Exception {
 		
-		final Iterable<Book> books;
-		if (requestParams.isEmpty()) {
-			books = bookDao.findAll();
+		Integer page = 1;
+		if (requestParams.containsKey("page")) {
+			page = Integer.parseInt(requestParams.get("page"));
+			if (page < 1) page = 1;
 		}
-		else {
-			books = search(requestParams);
-		}
+		Integer size = 2;
+		if (requestParams.containsKey("size")) {
+			size = Integer.parseInt(requestParams.get("size"));
+			if (size < 1 || size > 10) size = 2;
+		}		
+		
+		Pageable pageable = new PageRequest(page - 1, size);
+		String isbn = requestParams.get("isbn");
+		String title = requestParams.get("title");
+		
+		Page<Book> books = bookDao.findAll(pageable, isbn, title);
 		
 		final Iterator<Book> iteratorBooks = books.iterator();
 		final Set<BookGetDTO> booksGetDTO = new HashSet<>();
@@ -54,13 +66,6 @@ public class BookServiceImpl implements BookService {
 			booksGetDTO.add(bookGetDTO);
 		}
 		return booksGetDTO;
-	}
-	
-	private Set<Book> search(Map<String,String> requestParams) {
-		String isbn = requestParams.get("isbn");
-		String title = requestParams.get("title");
-		
-		return bookDao.search(isbn, title);
 	}
 
 	@Override

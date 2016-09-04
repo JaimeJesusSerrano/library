@@ -1,7 +1,7 @@
 package com.at.library.dao;
 
-import java.util.Set;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +13,8 @@ import com.at.library.model.User;
 public interface UserDao extends CrudRepository<User, Integer> {
 
 	@Query(value = "SELECT user FROM User AS user WHERE (user.name like %:name% OR :name is NULL) AND (user.dni like %:dni% OR :dni is NULL)")
-	public Set<User> search(
+	public Page<User> findAll(
+			Pageable pageable,
 			@Param("name") String name,
 			@Param("dni") String dni
 			);

@@ -10,6 +10,9 @@ import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,13 +50,22 @@ public class UserServiceImpl implements UserService {
 	@Transactional(readOnly = true)
 	public Set<UserDTO> findAll(Map<String,String> requestParams) {
 		
-		final Iterable<User> users;
-		if (requestParams.isEmpty()) {
-			users = userDao.findAll();
+		Integer page = 1;
+		if (requestParams.containsKey("page")) {
+			page = Integer.parseInt(requestParams.get("page"));
+			if (page < 1) page = 1;
 		}
-		else {
-			users = search(requestParams);
-		}
+		Integer size = 2;
+		if (requestParams.containsKey("size")) {
+			size = Integer.parseInt(requestParams.get("size"));
+			if (size < 1 || size > 10) size = 2;
+		}		
+		
+		Pageable pageable = new PageRequest(page - 1, size);
+		String name = requestParams.get("name");
+		String dni = requestParams.get("dni");
+		
+		Page<User> users = userDao.findAll(pageable, name, dni);
 		
 		final Iterator<User> iteratorUsers = users.iterator();
 		final Set<UserDTO> usersDTO = new HashSet<>();
@@ -63,13 +75,6 @@ public class UserServiceImpl implements UserService {
 			usersDTO.add(userDTO);
 		}
 		return usersDTO;
-	}
-	
-	private Set<User> search(Map<String,String> requestParams) {
-		String name = requestParams.get("name");
-		String dni = requestParams.get("dni");
-		
-		return userDao.search(name, dni);
 	}
 
 	@Override

@@ -1,2 +1,7 @@
 # library
-Repositorio para gestionar una biblioteca. Formación de 2 semanas
+Example library management from server with RESTful. Technologies used:
+- Java
+- Spring framework
+- Hibernate
+- Gradle
+- Tomcat
